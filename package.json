@@ -21,7 +21,13 @@
     "lint:fix": "next lint --fix",
     "format": "prettier --write **/**/*.{html,css,scss,js,jsx,cjs,mjs,ts,tsx,mdx} --cache",
     "test": "playwright test",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "db:studio": "drizzle-kit --config=drizzle/config.ts studio",
+    "db:push": "drizzle-kit --config=drizzle/config.ts push",
+    "db:create-migration": "drizzle-kit --config=drizzle/config.ts generate",
+    "db:migrate": "drizzle-kit --config=drizzle/config.ts migrate",
+    "db:seed": "cross-env SKIP_ENV_VALIDATION=true tsx drizzle/seeders/index.ts",
+    "db-danger:reset": "cross-env SKIP_ENV_VALIDATION=true tsx drizzle/seeders/reset.ts"
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "2.1.15",
@@ -56,6 +62,7 @@
     "@types/pg": "8.15.4",
     "@types/react": "19.1.8",
     "@types/react-dom": "19.1.6",
+    "cross-env": "7.0.3",
     "cssnano": "7.0.7",
     "drizzle-kit": "0.31.1",
     "eslint": "9.29.0",

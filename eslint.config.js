@@ -67,7 +67,8 @@ export default tseslint.config(
         'error',
         {
           allowList: {
-            env: true
+            env: true,
+            db: true
           }
         }
       ]

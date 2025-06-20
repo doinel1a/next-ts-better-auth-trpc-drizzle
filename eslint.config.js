@@ -60,5 +60,17 @@ export default tseslint.config(
         projectService: true
       }
     }
+  },
+  {
+    rules: {
+      'unicorn/prevent-abbreviations': [
+        'error',
+        {
+          allowList: {
+            env: true
+          }
+        }
+      ]
+    }
   }
 );

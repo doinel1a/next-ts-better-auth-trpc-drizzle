@@ -1,11 +1,11 @@
 {
-  "id": "30e4e762-6109-4c7e-b4d6-6dacca863600",
+  "id": "339d214a-dba0-4923-8f92-fafae5c302f4",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.users": {
-      "name": "users",
+    "public.students": {
+      "name": "students",
       "schema": "",
       "columns": {
         "id": {
@@ -15,7 +15,7 @@
           "notNull": true,
           "identity": {
             "type": "always",
-            "name": "users_id_seq",
+            "name": "students_id_seq",
             "schema": "public",
             "increment": "1",
             "startWith": "1",
@@ -61,8 +61,8 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "users_email_unique": {
-          "name": "users_email_unique",
+        "students_email_unique": {
+          "name": "students_email_unique",
           "nullsNotDistinct": false,
           "columns": [
             "email"

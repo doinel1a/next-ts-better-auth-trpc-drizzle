@@ -1,8 +1,9 @@
 import React from 'react';
 
 import db from 'drizzle';
-import { usersSchema } from 'drizzle/schemas/users';
 import dynamic from 'next/dynamic';
+
+import { studentsSchema } from '~/drizzle/schemas/students';
 
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -11,8 +12,8 @@ const Counter = dynamic(() => import('@/components/counter'), {
 });
 
 export default async function HomePage() {
-  const users = await db.select().from(usersSchema);
-  console.log('users', users);
+  const students = await db.select().from(studentsSchema);
+  console.log('students', students);
 
   return (
     <main className='flex h-full w-full flex-col items-center justify-center'>

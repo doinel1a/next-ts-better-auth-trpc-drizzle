@@ -31,6 +31,7 @@
     "db-danger:reset": "cross-env SKIP_ENV_VALIDATION=true tsx drizzle/seeders/reset.ts"
   },
   "dependencies": {
+    "@hookform/resolvers": "5.1.1",
     "@radix-ui/react-dropdown-menu": "2.1.15",
     "@radix-ui/react-label": "2.1.7",
     "@radix-ui/react-slot": "1.2.3",
@@ -48,6 +49,7 @@
     "pg": "8.16.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-hook-form": "7.58.1",
     "sonner": "2.0.5",
     "tailwind-merge": "3.3.1",
     "zod": "3.25.67"

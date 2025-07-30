@@ -1,17 +1,29 @@
 import React from 'react';
 
-import dynamic from 'next/dynamic';
+import db from 'drizzle';
+import { headers } from 'next/headers';
+import { redirect, RedirectType } from 'next/navigation';
 
-import { Skeleton } from '@/components/ui/skeleton';
+import { studentsSchema } from '~/drizzle/schemas/students';
 
-const Counter = dynamic(() => import('@/components/counter'), {
-  loading: () => <Skeleton className='h-44 w-72 rounded-md' />
-});
+import { auth } from '@/lib/auth';
+import { route } from '@/lib/constants/routes';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const students = await db.select().from(studentsSchema);
+  console.log('students', students);
+
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
+
+  if (!session) {
+    redirect(route.signIn, RedirectType.push);
+  }
+
   return (
-    <main className='flex h-full w-full flex-col items-center justify-center'>
-      <Counter />
+    <main className='flex h-full w-full flex-col items-center justify-center gap-y-5'>
+      {session.user.name && <h1 className='text-xl'>Welcome, {session.user.name}!</h1>}
     </main>
   );
 }

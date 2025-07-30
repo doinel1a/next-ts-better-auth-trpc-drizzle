@@ -21,14 +21,14 @@ type TSchema = z.infer<typeof schema>;
 const schema = z
   .object({
     name: z.string().min(2),
-    email: z.string().email(),
+    email: z.email(),
     password: z.string().min(8),
     confirmPassword: z.string().min(8)
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: 'Passwords do not match',
         path: ['confirmPassword']
       });

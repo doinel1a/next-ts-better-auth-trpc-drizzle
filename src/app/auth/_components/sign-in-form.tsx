@@ -19,7 +19,7 @@ import Container from './container';
 
 type TSchema = z.infer<typeof schema>;
 const schema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(8)
 });
 

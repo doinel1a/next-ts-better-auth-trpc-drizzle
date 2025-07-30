@@ -22,7 +22,7 @@ export default tseslint.config(
      * - eslint-plugin-jsx-a11y
      */
     extends: ['next'],
-    plugins: ['@tanstack/query']
+    plugins: ['@tanstack/query', 'drizzle']
   }),
   prettierConfig,
   prettierPlugin,
@@ -59,6 +59,22 @@ export default tseslint.config(
       parserOptions: {
         projectService: true
       }
+    }
+  },
+  {
+    rules: {
+      'unicorn/no-null': 'off',
+      'unicorn/prevent-abbreviations': [
+        'error',
+        {
+          allowList: {
+            env: true,
+            db: true,
+            ctx: true
+          },
+          ignore: [/params/i]
+        }
+      ]
     }
   }
 );

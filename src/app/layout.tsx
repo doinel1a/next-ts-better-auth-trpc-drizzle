@@ -12,6 +12,7 @@ import Footer from '@/components/footer';
 import GithubCorner from '@/components/github-corner';
 import Navbar from '@/components/navbar';
 import RootProvider from '@/components/providers/root';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
   title: config.metadata.title,
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: Readonly<TRootLayout>) {
             {children}
             <Footer />
 
+            <Toaster richColors closeButton />
             <GithubCorner
               title='Get started on GitHub'
               url='https://github.com/doinel1a/next-ts-shadcn-ui'

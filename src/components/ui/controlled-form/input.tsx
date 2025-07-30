@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import type { ComponentProps } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 
+import LucideIcon from '@/components/commons/lucide';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input as SCN_Input } from '@/components/ui/form/input';
 import { cn } from '@/lib/utils';
@@ -24,10 +25,17 @@ export default function Input<TFormSchema extends FieldValues>({
   name,
   label,
   isRequired,
+  type,
   className,
   disabled,
   ...otherProperties
 }: TInput<TFormSchema>) {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const isPassword = useMemo(() => type === 'password', [type]);
+  const onPasswordButtonClick = useCallback(() => {
+    setIsPasswordVisible(!isPasswordVisible);
+  }, [isPasswordVisible]);
+
   return (
     <FormField
       control={control}
@@ -35,14 +43,31 @@ export default function Input<TFormSchema extends FieldValues>({
       render={({ field }) => (
         <FormItem className={cn('w-full', className)}>
           <FormLabel name={name} label={label} isRequired={isRequired} />
-          <FormControl>
-            <SCN_Input
-              className='placeholder:italic'
-              disabled={disabled}
-              {...otherProperties}
-              {...field}
-            />
-          </FormControl>
+          <div className='relative'>
+            <FormControl>
+              <SCN_Input
+                type={isPassword && isPasswordVisible ? 'text' : type}
+                className='pr-10.5 placeholder:italic'
+                disabled={disabled}
+                {...otherProperties}
+                {...field}
+              />
+            </FormControl>
+
+            {isPassword && (
+              <button
+                type='button'
+                tabIndex={-1}
+                className='text-muted-foreground absolute top-1/2 right-3 -translate-y-1/2 disabled:pointer-events-none disabled:opacity-50'
+                aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
+                disabled={disabled}
+                onClick={onPasswordButtonClick}
+              >
+                <LucideIcon name={isPasswordVisible ? 'EyeOff' : 'Eye'} />
+              </button>
+            )}
+          </div>
+
           <FormErrorMessage name={name} />
         </FormItem>
       )}

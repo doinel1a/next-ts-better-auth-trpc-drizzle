@@ -22,7 +22,7 @@ export default tseslint.config(
      * - eslint-plugin-jsx-a11y
      */
     extends: ['next'],
-    plugins: ['@tanstack/query']
+    plugins: ['@tanstack/query', 'drizzle']
   }),
   prettierConfig,
   prettierPlugin,

@@ -24,6 +24,11 @@ export const auth = betterAuth({
     // requireEmailVerification: true,
     // revokeSessionsOnPasswordReset: true
   },
+  account: {
+    accountLinking: {
+      enabled: true
+    }
+  },
   plugins: [
     /**
      * Must be the last plugin

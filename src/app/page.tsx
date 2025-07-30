@@ -1,16 +1,14 @@
 import React from 'react';
 
-import db from 'drizzle';
 import { headers } from 'next/headers';
 import { redirect, RedirectType } from 'next/navigation';
 
-import { studentsSchema } from '~/drizzle/schemas/students';
-
 import { auth } from '@/lib/auth';
 import { route } from '@/lib/constants/routes';
+import { api } from '@/server/trpc';
 
 export default async function HomePage() {
-  const students = await db.select().from(studentsSchema);
+  const students = await api.students.getFirst();
   console.log('students', students);
 
   const session = await auth.api.getSession({

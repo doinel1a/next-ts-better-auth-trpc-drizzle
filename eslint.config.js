@@ -69,10 +69,9 @@ export default tseslint.config(
         {
           allowList: {
             env: true,
-            db: true,
             ctx: true
           },
-          ignore: [/params/i]
+          ignore: [/db/i, /params/i]
         }
       ]
     }

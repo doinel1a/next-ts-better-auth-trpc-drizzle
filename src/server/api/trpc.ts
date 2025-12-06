@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable sonarjs/pseudo-random */
 
 import { initTRPC, TRPCError } from '@trpc/server';

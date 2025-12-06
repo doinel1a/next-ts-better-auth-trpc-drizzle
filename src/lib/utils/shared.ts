@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable unicorn/prefer-global-this */
 
 export function getAppBaseUrl() {

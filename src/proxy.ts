@@ -8,7 +8,7 @@ import { searchParamsKey } from './lib/constants/shared';
 
 const publicRoutes = new Set([route.signUp, route.signIn]);
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const isPublicRoute = publicRoutes.has(pathname);
 

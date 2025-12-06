@@ -1,29 +1,35 @@
-import { FlatCompat } from '@eslint/eslintrc';
+import tanstackQuery from '@tanstack/eslint-plugin-query';
+import eslintConfigNext from 'eslint-config-next';
 import prettierConfig from 'eslint-config-prettier/flat';
+// @ts-ignore | No types for this plugin
+import drizzlePlugin from 'eslint-plugin-drizzle';
 import prettierPlugin from 'eslint-plugin-prettier/recommended';
 import sonarjs from 'eslint-plugin-sonarjs';
 import unicorn from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
 
-const compat = new FlatCompat({
-  baseDirectory: import.meta.dirname
-});
-
 export default tseslint.config(
   {
     ignores: ['.next']
   },
-  ...compat.config({
-    /**
-     * Under the hood 'next' automatically configures:
-     * - eslint-plugin-next
-     * - eslint-plugin-react
-     * - eslint-plugin-react-hooks
-     * - eslint-plugin-jsx-a11y
-     */
-    extends: ['next'],
-    plugins: ['@tanstack/query', 'drizzle']
-  }),
+  /**
+   * eslint-config-next automatically configures:
+   * - eslint-plugin-next
+   * - eslint-plugin-react
+   * - eslint-plugin-react-hooks
+   * - eslint-plugin-jsx-a11y
+   */
+  ...eslintConfigNext,
+  ...tanstackQuery.configs['flat/recommended'],
+  {
+    plugins: {
+      drizzle: drizzlePlugin
+    },
+    rules: {
+      'drizzle/enforce-delete-with-where': 'error',
+      'drizzle/enforce-update-with-where': 'error'
+    }
+  },
   prettierConfig,
   prettierPlugin,
   sonarjs.configs.recommended,
@@ -48,6 +54,12 @@ export default tseslint.config(
       '@typescript-eslint/no-misused-promises': [
         'error',
         { checksVoidReturn: { attributes: false } }
+      ],
+      '@typescript-eslint/restrict-template-expressions': [
+        'error',
+        {
+          allowNumber: true
+        }
       ]
     }
   },

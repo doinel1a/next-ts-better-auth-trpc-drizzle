@@ -15,7 +15,7 @@
 [opera-icon]: https://github.com/alrra/browser-logos/blob/main/src/opera/opera_64x64.png
 [safari-icon]: https://github.com/alrra/browser-logos/blob/main/src/safari/safari_64x64.png
 
-# Next.js 15 Better auth & Shadcn/ui — Template
+# Next.js 15 TS, Better Auth & Shadcn/ui — Template
 
 This development starter template is the ultimate solution to help you getting started on your project in no time, without the hassle of setting up and configuring your development environment from scratch each time you start working.
 This repository is ideal for full-stack developers who want to build modern, fast and reliable web applications with the latest cutting edge technologies such as **Next.js 15**, **React.js 19**, **Better Auth**, **TRPC**, **Drizzle**, **TypeScript**, **Shadcn/ui**, **TailwindCSS 4**, **ESLint**, **Prettier**, **Husky** and much more!
@@ -50,7 +50,7 @@ This repository is ideal for full-stack developers who want to build modern, fas
 ### Start developing:
 
 - Get the repository:
-  - click **"Use this template"** &nbsp; or &nbsp; **"Fork"** button <br /> *alternately*
+  - click **"Use this template"** &nbsp; or &nbsp; **"Fork"** button <br /> _alternately_
   - **clone** the repository through your terminal: <br />
     ```bash
     git clone https://github.com/doinel1a/next-ts-better-auth-trpc-drizzle YOUR-PROJECT-NAME
@@ -58,11 +58,11 @@ This repository is ideal for full-stack developers who want to build modern, fas
 - Decide which package manager you want to use, then delete the unused "**.lock**" file(s);
 - Open your terminal or code editor to the path your project is located, and run:
 
-  |                                                  | **npm**           | **bun**           | **pnpm**       | **yarn**       |
-  | ------------------------------------------------ | ----------------- | ----------------- | -------------- | -------------- |
-  | **install** dependencies                  | `npm install`     | `bun install`     | `pnpm install` | `yarn install` |
-  | **run** the **development server**            | `npm run dev`     | `bun run dev`     | `pnpm dev`     | `yarn dev`     |
-  | **build** your **production app**         | `npm run build`   | `bun run build`   | `pnpm build`   | `yarn build`   |
+  |                                     | **npm**           | **bun**           | **pnpm**       | **yarn**       |
+  | ----------------------------------- | ----------------- | ----------------- | -------------- | -------------- |
+  | **install** dependencies            | `npm install`     | `bun install`     | `pnpm install` | `yarn install` |
+  | **run** the **development server**  | `npm run dev`     | `bun run dev`     | `pnpm dev`     | `yarn dev`     |
+  | **build** your **production app**   | `npm run build`   | `bun run build`   | `pnpm build`   | `yarn build`   |
   | **preview** your **production app** | `npm run preview` | `bun run preview` | `pnpm preview` | `yarn preview` |
 
 [Back to :arrow_up:](#nextjs-15-typescript--shadcnui--template "Back to 'Table of contents' section")

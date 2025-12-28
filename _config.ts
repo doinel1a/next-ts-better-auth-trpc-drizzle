@@ -1,6 +1,6 @@
 const config = {
   metadata: {
-    title: 'Next.js 15 Better auth & Shadcn/ui — Template',
+    title: 'Next.js 15 TS, Better Auth & Shadcn/ui — Template',
     description:
       'Boilerplate template designed to quickly bootstrap a Next.js Web App, SPA, website or landing page with Next.js 15, React.js 19, Better Auth, TRPC, Drizzle, TypeScript, Shadcn/ui, TailwindCSS 4 and much more in just 30 seconds.',
     keywords:

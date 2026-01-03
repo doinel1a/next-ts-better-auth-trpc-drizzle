@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 
-import React from 'react';
-
 import type { ButtonProperties } from '../ui/button';
 import type { TTablerIconName } from './tabler';
 

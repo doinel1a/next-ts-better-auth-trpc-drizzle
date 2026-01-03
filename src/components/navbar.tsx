@@ -1,5 +1,3 @@
-import React from 'react';
-
 import dynamic from 'next/dynamic';
 
 import UserToggle from './commons/user-toggle';

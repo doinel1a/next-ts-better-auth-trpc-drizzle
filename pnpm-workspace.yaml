@@ -5,6 +5,7 @@ onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - better-sqlite3
   - esbuild
+  - msw
   - prisma
   - sharp
   - unrs-resolver

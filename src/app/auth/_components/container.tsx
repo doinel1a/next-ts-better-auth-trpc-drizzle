@@ -7,7 +7,7 @@ import type { PropsWithChildren } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-import LucideIcon from '@/components/commons/lucide';
+import TablerIcon from '@/components/commons/tabler';
 import { Button } from '@/components/ui/button';
 import { route } from '@/lib/constants/routes';
 import { searchParamsKey } from '@/lib/constants/shared';
@@ -36,7 +36,7 @@ export default function Container({ mode, children }: Readonly<TContainer>) {
       <section className='bg-secondary flex w-96 flex-col rounded-md p-1'>
         <div className='bg-background flex flex-col gap-y-5 rounded-sm p-5'>
           <div className='flex flex-col items-center'>
-            <LucideIcon name='AtSign' size={50} className='text-primary mb-2.5' />
+            <TablerIcon name='IconAt' size={50} className='text-primary mb-2.5' />
             <h1 className='text-lg font-semibold'>
               {isModeSignUp ? 'Create a D1A account' : 'Sign in to D1A'}
             </h1>

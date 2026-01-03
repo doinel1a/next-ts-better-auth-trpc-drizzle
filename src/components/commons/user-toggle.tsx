@@ -17,7 +17,7 @@ import { signOut, useSession } from '@/lib/auth/client';
 import { route } from '@/lib/constants/routes';
 
 import { Skeleton } from '../ui/skeleton';
-import LucideIcon from './lucide';
+import TablerIcon from './tabler';
 
 export default function UserToggle() {
   const { isPending, data: session } = useSession();
@@ -42,7 +42,7 @@ export default function UserToggle() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant='outline' size='icon'>
-          <LucideIcon name='User' />
+          <TablerIcon name='IconUser' />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

@@ -5,7 +5,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import type { ComponentProps } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 
-import LucideIcon from '@/components/commons/lucide';
+import TablerIcon from '@/components/commons/tabler';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input as SCN_Input } from '@/components/ui/form/input';
 import { cn } from '@/lib/utils';
@@ -63,7 +63,7 @@ export default function Input<TFormSchema extends FieldValues>({
                 disabled={disabled}
                 onClick={onPasswordButtonClick}
               >
-                <LucideIcon name={isPasswordVisible ? 'EyeOff' : 'Eye'} />
+                <TablerIcon name={isPasswordVisible ? 'IconEyeOff' : 'IconEye'} />
               </button>
             )}
           </div>

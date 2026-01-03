@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 
-import React from 'react';
-
 import type { ButtonProperties } from '../ui/button';
-import type { TLucideIconName } from './lucide';
+import type { TTablerIconName } from './tabler';
 
 import { cn } from '@/lib/utils';
 
 import { Button as SCN_Button } from '../ui/button';
-import LucideIcon from './lucide';
+import TablerIcon from './tabler';
 
 type TButton = ButtonProperties & {
-  iconNameLeft?: TLucideIconName;
-  iconNameRight?: TLucideIconName;
+  iconNameLeft?: TTablerIconName;
+  iconNameRight?: TTablerIconName;
   isLoading?: boolean;
 };
 
@@ -34,7 +32,7 @@ export default function Button({
       {...otherProperties}
     >
       {/* Always show the loader icon on the left, when in loading */}
-      {isLoading && <Icon iconName='Loader' isLoading />}
+      {isLoading && <Icon iconName='IconLoader' isLoading />}
 
       {/* Show the icon on the left, when not in loading */}
       {!isLoading && iconNameLeft && <Icon iconName={iconNameLeft} />}
@@ -48,14 +46,14 @@ export default function Button({
 }
 
 type TIcon = {
-  iconName: TLucideIconName;
+  iconName: TTablerIconName;
   isLoading?: boolean;
 };
 
 function Icon({ iconName, isLoading }: Readonly<TIcon>) {
   return (
-    <LucideIcon
-      name={isLoading ? 'Loader' : iconName}
+    <TablerIcon
+      name={isLoading ? 'IconLoader' : iconName}
       className={cn('', { 'animate-spin': isLoading })}
       aria-hidden='true'
     />

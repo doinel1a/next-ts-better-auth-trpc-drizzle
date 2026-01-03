@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { FormLabel as SCN_FormLabel } from '@/components/ui/form';
 import { cn } from '@/lib/utils';
 

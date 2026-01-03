@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { icons } from '@tabler/icons-react';
 
 import { cn } from '@/lib/utils';

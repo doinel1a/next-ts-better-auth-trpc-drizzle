@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable sonarjs/prefer-read-only-props */
 /* eslint-disable unicorn/prevent-abbreviations */
 
 'use client';

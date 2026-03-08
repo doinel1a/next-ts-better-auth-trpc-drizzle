@@ -4,11 +4,12 @@ import prettierConfig from 'eslint-config-prettier/flat';
 // @ts-ignore | No types for this plugin
 import drizzlePlugin from 'eslint-plugin-drizzle';
 import prettierPlugin from 'eslint-plugin-prettier/recommended';
-import sonarjs from 'eslint-plugin-sonarjs';
+import { configs as sonarjs } from 'eslint-plugin-sonarjs';
 import unicorn from 'eslint-plugin-unicorn';
+import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
+export default defineConfig(
   {
     ignores: ['.next']
   },
@@ -32,7 +33,7 @@ export default tseslint.config(
   },
   prettierConfig,
   prettierPlugin,
-  sonarjs.configs.recommended,
+  sonarjs.recommended,
   unicorn.configs.recommended,
   {
     files: ['**/*.ts', '**/*.tsx'],

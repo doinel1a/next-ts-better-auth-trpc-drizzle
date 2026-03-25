@@ -1,7 +1,7 @@
 import tanstackQuery from '@tanstack/eslint-plugin-query';
 import eslintConfigNext from 'eslint-config-next';
 import prettierConfig from 'eslint-config-prettier/flat';
-// @ts-ignore | No types for this plugin
+// @ts-expect-error - No types for this plugin
 import drizzlePlugin from 'eslint-plugin-drizzle';
 import prettierPlugin from 'eslint-plugin-prettier/recommended';
 import { configs as sonarjs } from 'eslint-plugin-sonarjs';
@@ -11,7 +11,7 @@ import tseslint from 'typescript-eslint';
 
 export default defineConfig(
   {
-    ignores: ['.next']
+    ignores: ['.next', '*.js']
   },
   /**
    * eslint-config-next automatically configures:
@@ -24,11 +24,12 @@ export default defineConfig(
   ...tanstackQuery.configs['flat/recommended'],
   {
     plugins: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       drizzle: drizzlePlugin
     },
     rules: {
-      'drizzle/enforce-delete-with-where': 'error',
-      'drizzle/enforce-update-with-where': 'error'
+      'drizzle/enforce-delete-with-where': ['error', { drizzleObjectName: 'db' }],
+      'drizzle/enforce-update-with-where': ['error', { drizzleObjectName: 'db' }]
     }
   },
   prettierConfig,

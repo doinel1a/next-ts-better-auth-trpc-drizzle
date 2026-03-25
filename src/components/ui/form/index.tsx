@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable unicorn/prevent-abbreviations */
+/* eslint-disable @typescript-eslint/no-unnecessary-type-arguments */
 
 'use client';
 

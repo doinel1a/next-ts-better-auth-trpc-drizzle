@@ -1,44 +1,81 @@
 {
   "compilerOptions": {
-    /* Base Options: */
-    "esModuleInterop": true,
-    "skipLibCheck": true,
+    // ==========================================================================
+    // LANGUAGE & ENVIRONMENT
+    // ==========================================================================
     "target": "es2022",
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
-    "isolatedModules": true,
-
-    /* Strictness */
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "checkJs": true,
-
-    /* Bundled projects */
-    "lib": ["dom", "dom.iterable", "ES2022"],
-    "noEmit": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "lib": ["dom", "dom.iterable", "es2022"],
     "jsx": "react-jsx",
-    "plugins": [{ "name": "next" }],
-    "incremental": true,
+    "moduleDetection": "force",
 
-    /* Path Aliases */
+    // ==========================================================================
+    // MODULES
+    // ==========================================================================
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
     "paths": {
       "~/*": ["./*"],
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["node"],
+    "noUncheckedSideEffectImports": true,
+
+    // ==========================================================================
+    // TYPE CHECKING
+    // ==========================================================================
+    "strict": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+
+    // ==========================================================================
+    // JAVASCRIPT SUPPORT
+    // ==========================================================================
+    "allowJs": false,
+
+    // ==========================================================================
+    // INTEROP CONSTRAINTS
+    // ==========================================================================
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+
+    // ==========================================================================
+    // EMIT
+    // ==========================================================================
+    "noEmit": true,
+
+    // ==========================================================================
+    // PROJECTS
+    // ==========================================================================
+    "incremental": true,
+
+    // ==========================================================================
+    // EDITOR SUPPORT
+    // ==========================================================================
+    "plugins": [{ "name": "next" }],
+
+    // ==========================================================================
+    // OUTPUT FORMATTING
+    // ==========================================================================
+    "noErrorTruncation": true,
+
+    // ==========================================================================
+    // COMPLETENESS
+    // ==========================================================================
+    "skipLibCheck": true
   },
-  "include": [
-    ".eslintrc.cjs",
-    "next-env.d.ts",
-    "next.config.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.js",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
-  ],
+  // ============================================================================
+  // FILE INCLUSION
+  // ============================================================================
+  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

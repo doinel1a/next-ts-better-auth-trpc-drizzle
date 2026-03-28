@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/prefer-literal-enum-member */
-
 const BASE = 'NEXT-TS-SHADCN-UI';
 
-enum EStorageKeys {
-  theme = `${BASE}-THEME`
-}
+const STORAGE_KEYS = {
+  theme: `${BASE}-THEME`
+} as const;
 
-export default EStorageKeys;
+export default STORAGE_KEYS;

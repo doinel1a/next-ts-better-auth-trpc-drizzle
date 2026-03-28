@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 
 import SignUpForm from '../_components/sign-up-form';
 

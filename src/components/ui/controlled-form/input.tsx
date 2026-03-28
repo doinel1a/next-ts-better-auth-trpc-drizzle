@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import type { ComponentProps } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';

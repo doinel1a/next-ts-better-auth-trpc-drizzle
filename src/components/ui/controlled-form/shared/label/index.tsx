@@ -11,7 +11,7 @@ type TFormLabel = {
 };
 
 export default function FormLabel({ name, label, isRequired, className }: Readonly<TFormLabel>) {
-  if (!label) {
+  if (label === undefined || label === '') {
     return null;
   }
 

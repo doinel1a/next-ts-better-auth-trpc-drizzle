@@ -16,9 +16,9 @@ export default function TablerIcon({
   className,
   ...otherProperties
 }: Readonly<TTablerIcon>) {
-  const _TablerIcon = icons[name];
+  const Icon = icons[name];
   return (
-    <_TablerIcon
+    <Icon
       size={size}
       className={cn({ 'h-[1.2rem] w-[1.2rem]': !size }, className)}
       {...otherProperties}

@@ -8,17 +8,17 @@ import { searchParamsKey } from './lib/constants/shared';
 
 const publicRoutes = new Set([route.signUp, route.signIn]);
 
-export async function proxy(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const isPublicRoute = publicRoutes.has(pathname);
 
   const sessionCookie = getSessionCookie(request);
-  const isAuthenticated = !!sessionCookie;
+  const isAuthenticated = sessionCookie != null;
 
   if (isPublicRoute) {
     if (isAuthenticated && (pathname === route.signUp || pathname === route.signIn)) {
       const redirectUrl = request.nextUrl.searchParams.get(searchParamsKey.redirectUrl);
-      if (redirectUrl) {
+      if (redirectUrl !== null && redirectUrl !== '') {
         return NextResponse.redirect(new URL(redirectUrl, request.url));
       }
 

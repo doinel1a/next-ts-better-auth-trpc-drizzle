@@ -1,3 +1,5 @@
+/* eslint-disable react/hook-use-state */
+
 'use client';
 
 import { useState } from 'react';

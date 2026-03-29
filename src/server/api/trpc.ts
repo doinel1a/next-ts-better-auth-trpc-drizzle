@@ -66,7 +66,7 @@ export const protectedProcedure = t.procedure.use(timingMiddleware).use(({ ctx, 
   return next({
     ctx: {
       // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session }
+      session: { ...ctx.session, user: ctx.session.user }
     }
   });
 });

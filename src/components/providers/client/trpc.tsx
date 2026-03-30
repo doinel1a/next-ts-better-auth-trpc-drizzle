@@ -1,5 +1,3 @@
-/* eslint-disable react/hook-use-state */
-
 'use client';
 
 import { useState } from 'react';
@@ -38,7 +36,7 @@ type TTRPCProvider = PropsWithChildren;
 export function TRPCProvider({ children }: Readonly<TTRPCProvider>) {
   const queryClient = getQueryClient();
 
-  const [trpcClient] = useState(() =>
+  const [trpcClient, _] = useState(() =>
     api.createClient({
       links: [
         loggerLink({

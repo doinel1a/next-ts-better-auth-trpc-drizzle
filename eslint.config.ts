@@ -68,7 +68,10 @@ export default defineConfig(
           ]
         }
       ],
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
+      ],
       '@typescript-eslint/prefer-readonly': 'error',
       '@typescript-eslint/require-await': 'error',
       '@typescript-eslint/restrict-template-expressions': [
@@ -108,8 +111,8 @@ export default defineConfig(
     rules: {
       curly: ['error', 'all'],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'no-unused-vars': 'off', // Covered by @typescript-eslint
 
-      'react/hook-use-state': 'error',
       'react/jsx-no-useless-fragment': 'error',
       'react/no-array-index-key': 'error',
       'react/no-unstable-nested-components': 'error',
@@ -120,12 +123,9 @@ export default defineConfig(
         {
           allowList: {
             env: true,
-            db: true,
-            ctx: true,
-            params: true,
-            searchParamsKey: true,
-            globalForDb: true
-          }
+            ctx: true
+          },
+          ignore: [/db/i, /util/i, /param/i]
         }
       ],
 

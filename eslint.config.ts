@@ -4,6 +4,7 @@ import prettierConfig from 'eslint-config-prettier/flat';
 // @ts-expect-error - No types for this plugin
 import drizzlePlugin from 'eslint-plugin-drizzle';
 import prettierPlugin from 'eslint-plugin-prettier/recommended';
+import reactCompilerPlugin from 'eslint-plugin-react-compiler';
 import { configs as sonarjs } from 'eslint-plugin-sonarjs';
 import unicorn from 'eslint-plugin-unicorn';
 import { defineConfig } from 'eslint/config';
@@ -23,6 +24,7 @@ export default defineConfig(
   ...tanstackQuery.configs['flat/recommended'],
   sonarjs.recommended,
   unicorn.configs.recommended,
+  reactCompilerPlugin.configs.recommended,
   {
     linterOptions: {
       reportUnusedDisableDirectives: true

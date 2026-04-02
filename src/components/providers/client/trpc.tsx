@@ -1,3 +1,5 @@
+/* eslint-disable react-x/use-state */
+
 'use client';
 
 import { useState } from 'react';

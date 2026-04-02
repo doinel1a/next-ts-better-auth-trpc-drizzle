@@ -3,6 +3,8 @@
 /* eslint-disable @typescript-eslint/no-restricted-imports */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable react-x/no-context-provider */
+/* eslint-disable react-x/no-use-context */
 
 'use client';
 

@@ -1,10 +1,11 @@
 import tanstackQuery from '@tanstack/eslint-plugin-query';
 import eslintConfigNext from 'eslint-config-next';
-import prettierConfig from 'eslint-config-prettier/flat';
 // @ts-expect-error - No types for this plugin
-import drizzlePlugin from 'eslint-plugin-drizzle';
+import drizzle from 'eslint-plugin-drizzle';
 import prettierPlugin from 'eslint-plugin-prettier/recommended';
-import reactCompilerPlugin from 'eslint-plugin-react-compiler';
+import reactCompiler from 'eslint-plugin-react-compiler';
+import reactDOM from 'eslint-plugin-react-dom';
+import reactX from 'eslint-plugin-react-x';
 import { configs as sonarjs } from 'eslint-plugin-sonarjs';
 import unicorn from 'eslint-plugin-unicorn';
 import { defineConfig } from 'eslint/config';
@@ -24,7 +25,11 @@ export default defineConfig(
   ...tanstackQuery.configs['flat/recommended'],
   sonarjs.recommended,
   unicorn.configs.recommended,
-  reactCompilerPlugin.configs.recommended,
+  reactCompiler.configs.recommended,
+  reactX.configs['recommended-type-checked'],
+  reactX.configs['disable-conflict-eslint-plugin-react'],
+  reactX.configs['disable-conflict-eslint-plugin-react-hooks'],
+  reactDOM.configs.recommended,
   {
     linterOptions: {
       reportUnusedDisableDirectives: true
@@ -41,8 +46,9 @@ export default defineConfig(
     rules: {
       '@typescript-eslint/consistent-type-imports': [
         'error',
-        { prefer: 'type-imports', fixStyle: 'inline-type-imports' }
+        { prefer: 'type-imports', fixStyle: 'separate-type-imports' }
       ],
+      '@typescript-eslint/no-import-type-side-effects': 'error',
       '@typescript-eslint/naming-convention': [
         'error',
         { selector: 'typeLike', format: ['PascalCase'] },
@@ -75,7 +81,6 @@ export default defineConfig(
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
       ],
       '@typescript-eslint/prefer-readonly': 'error',
-      '@typescript-eslint/require-await': 'error',
       '@typescript-eslint/restrict-template-expressions': [
         'error',
         {
@@ -96,13 +101,12 @@ export default defineConfig(
       '@typescript-eslint/consistent-type-definitions': 'off'
     }
   },
-  prettierConfig,
   prettierPlugin,
   {
     files: ['**/*.ts'],
     plugins: {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      drizzle: drizzlePlugin
+      drizzle: drizzle
     },
     rules: {
       'drizzle/enforce-update-with-where': ['error', { drizzleObjectName: 'db' }],
@@ -117,7 +121,7 @@ export default defineConfig(
 
       'react/jsx-no-useless-fragment': 'error',
       'react/no-array-index-key': 'error',
-      'react/no-unstable-nested-components': 'error',
+      'react/no-unstable-nested-components': ['error', { allowAsProps: true }],
       'react/self-closing-comp': 'error',
 
       'unicorn/prevent-abbreviations': [

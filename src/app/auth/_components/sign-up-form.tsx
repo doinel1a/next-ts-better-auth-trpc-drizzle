@@ -13,7 +13,7 @@ import Form from '@/components/ui/controlled-form';
 import Input from '@/components/ui/controlled-form/input';
 import { route } from '@/lib/constants/routes';
 import { searchParamsKey } from '@/lib/constants/shared';
-import { signUp } from '@/server/better-auth/client';
+import { signUp } from '@/server/auth/client';
 
 import Container from './container';
 

@@ -9,7 +9,7 @@ import { headers } from 'next/headers';
 
 import { createCaller } from './api/root';
 import { createTRPCContext } from './api/trpc';
-import { createQueryClient } from './query-client';
+import { createQueryClient } from './trpc/query-client';
 
 const createContext = cache(async () => {
   const heads = new Headers(await headers());

@@ -15,8 +15,9 @@ import { httpBatchStreamLink, loggerLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
 import SuperJSON from 'superjson';
 
+import { createQueryClient } from '~/src/server/trpc/query-client';
+
 import { getAppBaseUrl } from '@/lib/utils/shared';
-import { createQueryClient } from '@/server/query-client';
 
 let clientQueryClientSingleton: QueryClient | undefined;
 const getQueryClient = () => {

@@ -4,7 +4,7 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import z, { ZodError } from 'zod';
 
-import { getSession } from '@/server/better-auth/server';
+import { getSession } from '@/server/auth/server';
 
 import { db } from '../db';
 

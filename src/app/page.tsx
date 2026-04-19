@@ -1,7 +1,7 @@
 import { redirect, RedirectType } from 'next/navigation';
 
 import { route } from '@/lib/constants/routes';
-import { getSession } from '@/server/better-auth/server';
+import { getSession } from '@/server/auth/server';
 import { api } from '@/server/trpc';
 
 export default async function HomePage() {

@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { route } from '@/lib/constants/routes';
-import { signOut, useSession } from '@/server/better-auth/client';
+import { signOut, useSession } from '@/server/auth/client';
 
 import { Skeleton } from '../ui/skeleton';
 import TablerIcon from './tabler';

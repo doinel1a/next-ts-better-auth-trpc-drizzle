@@ -1,18 +1,15 @@
 /* eslint-disable sonarjs/pseudo-random */
 
 import { initTRPC, TRPCError } from '@trpc/server';
-import { headers } from 'next/headers';
 import superjson from 'superjson';
 import z, { ZodError } from 'zod';
 
-import { auth } from '@/lib/auth';
+import { getSession } from '@/server/better-auth/server';
 
 import { db } from '../db';
 
 export const createTRPCContext = async (options: { headers: Headers }) => {
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
+  const session = await getSession();
 
   return {
     session,

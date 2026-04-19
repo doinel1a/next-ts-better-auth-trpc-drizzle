@@ -13,8 +13,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { signOut, useSession } from '@/lib/auth/client';
 import { route } from '@/lib/constants/routes';
+import { signOut, useSession } from '@/server/better-auth/client';
 
 import { Skeleton } from '../ui/skeleton';
 import TablerIcon from './tabler';

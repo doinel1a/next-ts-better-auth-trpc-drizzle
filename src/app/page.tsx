@@ -1,18 +1,14 @@
-import { headers } from 'next/headers';
 import { redirect, RedirectType } from 'next/navigation';
 
-import { auth } from '@/lib/auth';
 import { route } from '@/lib/constants/routes';
+import { getSession } from '@/server/better-auth/server';
 import { api } from '@/server/trpc';
 
 export default async function HomePage() {
   const students = await api.students.getFirst();
   console.log('students', students);
 
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
-
+  const session = await getSession();
   if (!session) {
     redirect(route.signIn, RedirectType.push);
   }

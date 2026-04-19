@@ -11,9 +11,9 @@ import { z } from 'zod';
 import Button from '@/components/commons/button';
 import Form from '@/components/ui/controlled-form';
 import Input from '@/components/ui/controlled-form/input';
-import { signUp } from '@/lib/auth/client';
 import { route } from '@/lib/constants/routes';
 import { searchParamsKey } from '@/lib/constants/shared';
+import { signUp } from '@/server/better-auth/client';
 
 import Container from './container';
 

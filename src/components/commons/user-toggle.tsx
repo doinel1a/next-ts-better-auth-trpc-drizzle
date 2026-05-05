@@ -35,7 +35,7 @@ export default function UserToggle() {
   }, [router]);
 
   if (isPending) {
-    return <Skeleton className='size-9 rounded-md' />;
+    return <Skeleton className='size-8 rounded-md' />;
   }
 
   return (
@@ -45,7 +45,7 @@ export default function UserToggle() {
           <TablerIcon name='IconUser' />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent align='end'>
         {session ? (
           <DropdownMenuItem variant='destructive' onClick={onSignOutClick}>
             Sign out

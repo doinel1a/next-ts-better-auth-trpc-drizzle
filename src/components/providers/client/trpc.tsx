@@ -34,9 +34,9 @@ export const api = createTRPCReact<AppRouter>();
 export type RouterInputs = inferRouterInputs<AppRouter>;
 export type RouterOutputs = inferRouterOutputs<AppRouter>;
 
-type TTRPCProvider = PropsWithChildren;
+type TTRPCProvider = Readonly<PropsWithChildren>;
 
-export function TRPCProvider({ children }: Readonly<TTRPCProvider>) {
+export function TRPCProvider({ children }: TTRPCProvider) {
   const queryClient = getQueryClient();
 
   const [trpcClient, _] = useState(() =>

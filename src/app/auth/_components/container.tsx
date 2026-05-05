@@ -15,11 +15,13 @@ import { getAppBaseUrl } from '@/lib/utils/shared';
 
 const baseUrl = getAppBaseUrl();
 
-type TContainer = PropsWithChildren & {
-  mode: 'sign-up' | 'sign-in';
-};
+type TContainer = Readonly<
+  PropsWithChildren & {
+    mode: 'sign-up' | 'sign-in';
+  }
+>;
 
-export default function Container({ mode, children }: Readonly<TContainer>) {
+export default function Container({ mode, children }: TContainer) {
   const isModeSignUp = useMemo(() => mode === 'sign-up', [mode]);
 
   const params = useSearchParams();

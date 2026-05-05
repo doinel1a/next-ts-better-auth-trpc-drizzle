@@ -4,18 +4,13 @@ import { cn } from '@/lib/utils';
 
 export type TTablerIconName = keyof typeof icons;
 
-type TTablerIcon = {
+type TTablerIcon = Readonly<{
   name: TTablerIconName;
   size?: number;
   className?: string;
-};
+}>;
 
-export default function TablerIcon({
-  name,
-  size,
-  className,
-  ...otherProperties
-}: Readonly<TTablerIcon>) {
+export default function TablerIcon({ name, size, className, ...otherProperties }: TTablerIcon) {
   const Icon = icons[name];
   return (
     <Icon

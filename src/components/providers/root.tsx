@@ -3,9 +3,9 @@ import type { PropsWithChildren } from 'react';
 import ThemeProvider from './client/theme';
 import { TRPCProvider } from './client/trpc';
 
-type TRootProvider = PropsWithChildren;
+type TRootProvider = Readonly<PropsWithChildren>;
 
-export default function RootProvider({ children }: Readonly<TRootProvider>) {
+export default function RootProvider({ children }: TRootProvider) {
   return (
     <ThemeProvider>
       <TRPCProvider>{children}</TRPCProvider>

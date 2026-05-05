@@ -3,14 +3,14 @@ import { cn } from '@/lib/utils';
 
 import OptionalBadge from './optional-badge';
 
-type TFormLabel = {
+type TFormLabel = Readonly<{
   name: string;
   label?: string;
   isRequired?: boolean;
   className?: string;
-};
+}>;
 
-export default function FormLabel({ name, label, isRequired, className }: Readonly<TFormLabel>) {
+export default function FormLabel({ name, label, isRequired, className }: TFormLabel) {
   if (label === undefined || label === '') {
     return null;
   }

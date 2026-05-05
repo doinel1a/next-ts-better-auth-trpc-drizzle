@@ -45,12 +45,12 @@ export default function Button({
   );
 }
 
-type TIcon = {
+type TIcon = Readonly<{
   iconName: TTablerIconName;
   isLoading?: boolean;
-};
+}>;
 
-function Icon({ iconName, isLoading }: Readonly<TIcon>) {
+function Icon({ iconName, isLoading }: TIcon) {
   return (
     <TablerIcon
       name={isLoading ? 'IconLoader' : iconName}

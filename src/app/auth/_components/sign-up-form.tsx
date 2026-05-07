@@ -11,6 +11,7 @@ import { z } from 'zod';
 import Button from '@/components/commons/button';
 import Form from '@/components/ui/controlled-form';
 import Input from '@/components/ui/controlled-form/input';
+import InputPassword from '@/components/ui/controlled-form/input-password';
 import { route, searchParamsKey } from '@/lib/constants/routes';
 import { signUp } from '@/server/auth/client';
 
@@ -110,19 +111,18 @@ export default function SignUpForm() {
           disabled={isSigningUp}
           isRequired
         />
-        <Input
+        <InputPassword
           control={form.control}
           name='password'
           label='Password'
-          type='password'
           disabled={isSigningUp}
           isRequired
         />
-        <Input
+
+        <InputPassword
           control={form.control}
           name='confirmPassword'
           label='Confirm password'
-          type='password'
           disabled={isSigningUp}
           isRequired
         />

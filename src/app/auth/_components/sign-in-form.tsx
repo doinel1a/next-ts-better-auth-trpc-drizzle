@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
@@ -13,10 +13,28 @@ import Form from '@/components/ui/controlled-form';
 import Input from '@/components/ui/controlled-form/input';
 import InputPassword from '@/components/ui/controlled-form/input-password';
 import { useAuthRedirect } from '@/hooks/use-auth-redirect';
+import { useSignIn } from '@/hooks/use-sign-in';
 import { route } from '@/lib/constants/routes';
-import { signIn } from '@/server/auth/client';
 
 import Container from './container';
+
+export default function SignInForm() {
+  const router = useRouter();
+  const { redirectUrl } = useAuthRedirect(route.home);
+
+  return (
+    <SignInFormContent
+      onSuccess={() => {
+        toast.success('Sign in successful');
+        router.replace(redirectUrl);
+      }}
+      onError={(ctx) => {
+        console.error('CLIENT ERROR | Sign in:', ctx.error);
+        toast.error(ctx.error.message);
+      }}
+    />
+  );
+}
 
 type TSchema = z.infer<typeof schema>;
 const schema = z.object({
@@ -24,9 +42,9 @@ const schema = z.object({
   password: z.string().min(8)
 });
 
-export default function SignInForm() {
-  const [isSigningIn, setIsSigningIn] = useState(false);
+type TSignInFormContent = Readonly<NonNullable<Parameters<typeof useSignIn>[0]>>;
 
+function SignInFormContent({ onSuccess, onError }: TSignInFormContent) {
   const form = useForm<TSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -35,43 +53,13 @@ export default function SignInForm() {
     }
   });
 
-  const router = useRouter();
-  const { redirectUrl } = useAuthRedirect(route.home);
-
-  const onSignIn = useCallback(
-    async (values: TSchema) => {
-      const { email, password } = values;
-      await signIn.email(
-        {
-          email,
-          password
-        },
-        {
-          onRequest: () => {
-            setIsSigningIn(true);
-          },
-          onResponse: () => {
-            setIsSigningIn(false);
-          },
-          onSuccess: () => {
-            toast.success('Sign in successful');
-            router.replace(redirectUrl);
-          },
-          onError: (ctx) => {
-            console.error('CLIENT ERROR | Sign in:', ctx.error);
-            toast.error(ctx.error.message);
-          }
-        }
-      );
-    },
-    [router, redirectUrl]
-  );
+  const { isPending, submit } = useSignIn({ onSuccess, onError });
 
   const onSubmit = useCallback(
-    (values: TSchema) => {
-      void onSignIn(values);
+    ({ email, password }: TSchema) => {
+      void submit({ email, password });
     },
-    [onSignIn]
+    [submit]
   );
 
   return (
@@ -82,18 +70,18 @@ export default function SignInForm() {
           name='email'
           label='Email'
           type='email'
-          disabled={isSigningIn}
+          disabled={isPending}
           isRequired
         />
         <InputPassword
           control={form.control}
           name='password'
           label='Password'
-          disabled={isSigningIn}
+          disabled={isPending}
           isRequired
         />
 
-        <Button type='submit' isLoading={isSigningIn}>
+        <Button type='submit' isLoading={isPending}>
           Sign in
         </Button>
       </Form>

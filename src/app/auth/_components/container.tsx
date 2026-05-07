@@ -9,8 +9,7 @@ import { useSearchParams } from 'next/navigation';
 
 import TablerIcon from '@/components/commons/tabler';
 import { Button } from '@/components/ui/button';
-import { route } from '@/lib/constants/routes';
-import { searchParamsKey } from '@/lib/constants/shared';
+import { route, searchParamsKey } from '@/lib/constants/routes';
 import { getAppBaseUrl } from '@/lib/utils/shared';
 
 const baseUrl = getAppBaseUrl();

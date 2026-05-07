@@ -3,8 +3,7 @@ import type { NextRequest } from 'next/server';
 import { getSessionCookie } from 'better-auth/cookies';
 import { NextResponse } from 'next/server';
 
-import { route } from './lib/constants/routes';
-import { searchParamsKey } from './lib/constants/shared';
+import { route, searchParamsKey } from '@/lib/constants/routes';
 
 const publicRoutes = new Set([route.signUp, route.signIn]);
 

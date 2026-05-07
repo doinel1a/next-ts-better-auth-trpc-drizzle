@@ -1,4 +1,5 @@
 /* eslint-disable react-x/use-state */
+/* eslint-disable unicorn/prefer-global-this */
 
 'use client';
 
@@ -15,13 +16,12 @@ import { httpBatchStreamLink, loggerLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
 import SuperJSON from 'superjson';
 
-import { createQueryClient } from '~/src/server/trpc/query-client';
-
 import { getAppBaseUrl } from '@/lib/utils/shared';
+import { createQueryClient } from '@/server/trpc/query-client';
 
 let clientQueryClientSingleton: QueryClient | undefined;
 const getQueryClient = () => {
-  if (typeof globalThis === 'undefined') {
+  if (typeof window === 'undefined') {
     // server: always make a new query client
     return createQueryClient();
   }

@@ -1,11 +1,5 @@
-import dynamic from 'next/dynamic';
-
 import UserToggle from './commons/user-toggle';
-import { Skeleton } from './ui/skeleton';
-
-const ThemeToggle = dynamic(() => import('./ui/theme-toggle'), {
-  loading: () => <Skeleton className='size-8 rounded-md' />
-});
+import ThemeToggle from './ui/theme-toggle';
 
 export default function Navbar() {
   return (

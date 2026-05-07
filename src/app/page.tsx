@@ -10,7 +10,7 @@ export default async function HomePage() {
 
   const session = await getSession();
   if (!session) {
-    redirect(route.signIn, RedirectType.push);
+    redirect(route.signIn, RedirectType.replace);
   }
 
   return (

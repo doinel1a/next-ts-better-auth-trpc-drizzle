@@ -16,7 +16,7 @@ import { Slot } from 'radix-ui';
 import { Controller, FormProvider, useFormContext, useFormState } from 'react-hook-form';
 
 import { Label } from '@/components/ui/form/label';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn';
 
 const Form = FormProvider;
 

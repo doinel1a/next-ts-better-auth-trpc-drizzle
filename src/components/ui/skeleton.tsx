@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/prevent-abbreviations */
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn';
 
 function Skeleton({ className, ...props }: React.ComponentProps<'div'>) {
   return (

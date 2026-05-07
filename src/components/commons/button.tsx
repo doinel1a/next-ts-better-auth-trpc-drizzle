@@ -3,7 +3,7 @@
 import type { ButtonProperties } from '../ui/button';
 import type { TTablerIconName } from './tabler';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn';
 
 import { Button as SCN_Button } from '../ui/button';
 import TablerIcon from './tabler';

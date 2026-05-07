@@ -3,9 +3,8 @@ import type { NextRequest } from 'next/server';
 import { getSessionCookie } from 'better-auth/cookies';
 import { NextResponse } from 'next/server';
 
-import { searchParamsKey } from '@/lib/constants/routes';
-
-import { route } from './lib/constants/routes';
+import { route, searchParamsKey } from '@/lib/constants/routes';
+import { isValidRedirectUrl } from '@/lib/utils/auth-redirect';
 
 const publicRoutes = new Set([route.signUp, route.signIn]);
 
@@ -19,11 +18,8 @@ export function proxy(request: NextRequest) {
   if (isPublicRoute) {
     if (isAuthenticated && (pathname === route.signUp || pathname === route.signIn)) {
       const redirectUrl = request.nextUrl.searchParams.get(searchParamsKey.redirectUrl);
-      if (redirectUrl !== null && redirectUrl !== '') {
-        const isRelative = redirectUrl.startsWith('/') && !redirectUrl.startsWith('//');
-        if (isRelative) {
-          return NextResponse.redirect(new URL(redirectUrl, request.url));
-        }
+      if (isValidRedirectUrl(redirectUrl)) {
+        return NextResponse.redirect(new URL(redirectUrl, request.url));
       }
 
       return NextResponse.redirect(new URL(route.home, request.url));

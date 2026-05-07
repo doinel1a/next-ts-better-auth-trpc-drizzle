@@ -1,9 +1,9 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -12,7 +12,8 @@ import Button from '@/components/commons/button';
 import Form from '@/components/ui/controlled-form';
 import Input from '@/components/ui/controlled-form/input';
 import InputPassword from '@/components/ui/controlled-form/input-password';
-import { route, searchParamsKey } from '@/lib/constants/routes';
+import { useAuthRedirect } from '@/hooks/use-auth-redirect';
+import { route } from '@/lib/constants/routes';
 import { signUp } from '@/server/auth/client';
 
 import Container from './container';
@@ -49,11 +50,7 @@ export default function SignUpForm() {
   });
 
   const router = useRouter();
-  const params = useSearchParams();
-  const url = useMemo(() => {
-    const redirectUrl = params.get(searchParamsKey.redirectUrl);
-    return redirectUrl ?? route.signIn;
-  }, [params]);
+  const { redirectUrl } = useAuthRedirect(route.signIn);
 
   const onSignUp = useCallback(
     async (values: TSchema) => {
@@ -73,7 +70,7 @@ export default function SignUpForm() {
           },
           onSuccess: () => {
             toast.success('Sign up successful');
-            router.replace(url);
+            router.replace(redirectUrl);
           },
           onError: (ctx) => {
             console.error('CLIENT ERROR | Sign up:', ctx.error);
@@ -82,7 +79,7 @@ export default function SignUpForm() {
         }
       );
     },
-    [router, url]
+    [router, redirectUrl]
   );
 
   const onSubmit = useCallback(

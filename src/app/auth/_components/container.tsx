@@ -1,18 +1,13 @@
 'use client';
 
-import { useMemo } from 'react';
-
 import type { PropsWithChildren } from 'react';
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 
 import TablerIcon from '@/components/commons/tabler';
 import { Button } from '@/components/ui/button';
-import { route, searchParamsKey } from '@/lib/constants/routes';
-import { getAppBaseUrl } from '@/lib/utils/shared';
-
-const baseUrl = getAppBaseUrl();
+import { useAuthRedirect } from '@/hooks/use-auth-redirect';
+import { route } from '@/lib/constants/routes';
 
 type TContainer = Readonly<
   PropsWithChildren & {
@@ -21,16 +16,10 @@ type TContainer = Readonly<
 >;
 
 export default function Container({ mode, children }: TContainer) {
-  const isModeSignUp = useMemo(() => mode === 'sign-up', [mode]);
+  const isModeSignUp = mode === 'sign-up';
 
-  const params = useSearchParams();
-  const url = useMemo(() => {
-    const authUrl = isModeSignUp ? route.signIn : route.signUp;
-    const redirectUrl = params.get(searchParamsKey.redirectUrl);
-    const url = new URL(authUrl, baseUrl);
-    url.searchParams.set(searchParamsKey.redirectUrl, redirectUrl ?? '');
-    return url;
-  }, [isModeSignUp, params]);
+  const { buildAuthUrl } = useAuthRedirect(route.home);
+  const url = buildAuthUrl(isModeSignUp ? route.signIn : route.signUp);
 
   return (
     <div className='flex flex-col gap-y-5'>

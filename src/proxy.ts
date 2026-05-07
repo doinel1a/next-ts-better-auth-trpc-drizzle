@@ -18,7 +18,10 @@ export function proxy(request: NextRequest) {
     if (isAuthenticated && (pathname === route.signUp || pathname === route.signIn)) {
       const redirectUrl = request.nextUrl.searchParams.get(searchParamsKey.redirectUrl);
       if (redirectUrl !== null && redirectUrl !== '') {
-        return NextResponse.redirect(new URL(redirectUrl, request.url));
+        const isRelative = redirectUrl.startsWith('/') && !redirectUrl.startsWith('//');
+        if (isRelative) {
+          return NextResponse.redirect(new URL(redirectUrl, request.url));
+        }
       }
 
       return NextResponse.redirect(new URL(route.home, request.url));
@@ -37,5 +40,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/']
+  matcher: [String.raw`/((?!api|_next/static|_next/image|favicon\.ico|favicon\.svg).*)`]
 };

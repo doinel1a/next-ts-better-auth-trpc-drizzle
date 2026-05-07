@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
@@ -13,10 +13,28 @@ import Form from '@/components/ui/controlled-form';
 import Input from '@/components/ui/controlled-form/input';
 import InputPassword from '@/components/ui/controlled-form/input-password';
 import { useAuthRedirect } from '@/hooks/use-auth-redirect';
+import { useSignUp } from '@/hooks/use-sign-up';
 import { route } from '@/lib/constants/routes';
-import { signUp } from '@/server/auth/client';
 
 import Container from './container';
+
+export default function SignUpForm() {
+  const router = useRouter();
+  const { redirectUrl } = useAuthRedirect(route.signIn);
+
+  return (
+    <SignUpFormContent
+      onSuccess={() => {
+        toast.success('Sign up successful');
+        router.replace(redirectUrl);
+      }}
+      onError={(ctx) => {
+        console.error('CLIENT ERROR | Sign up:', ctx.error);
+        toast.error(ctx.error.message);
+      }}
+    />
+  );
+}
 
 type TSchema = z.infer<typeof schema>;
 const schema = z
@@ -36,9 +54,9 @@ const schema = z
     }
   });
 
-export default function SignUpForm() {
-  const [isSigningUp, setIsSigningUp] = useState(false);
+type TSignUpFormContent = Readonly<NonNullable<Parameters<typeof useSignUp>[0]>>;
 
+function SignUpFormContent({ onSuccess, onError }: TSignUpFormContent) {
   const form = useForm<TSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -49,44 +67,13 @@ export default function SignUpForm() {
     }
   });
 
-  const router = useRouter();
-  const { redirectUrl } = useAuthRedirect(route.signIn);
-
-  const onSignUp = useCallback(
-    async (values: TSchema) => {
-      const { name, email, password } = values;
-      await signUp.email(
-        {
-          name,
-          email,
-          password
-        },
-        {
-          onRequest: () => {
-            setIsSigningUp(true);
-          },
-          onResponse: () => {
-            setIsSigningUp(false);
-          },
-          onSuccess: () => {
-            toast.success('Sign up successful');
-            router.replace(redirectUrl);
-          },
-          onError: (ctx) => {
-            console.error('CLIENT ERROR | Sign up:', ctx.error);
-            toast.error(ctx.error.message);
-          }
-        }
-      );
-    },
-    [router, redirectUrl]
-  );
+  const { isPending, submit } = useSignUp({ onSuccess, onError });
 
   const onSubmit = useCallback(
-    (values: TSchema) => {
-      void onSignUp(values);
+    ({ name, email, password }: TSchema) => {
+      void submit({ name, email, password });
     },
-    [onSignUp]
+    [submit]
   );
 
   return (
@@ -97,7 +84,7 @@ export default function SignUpForm() {
           name='name'
           label='Name'
           type='text'
-          disabled={isSigningUp}
+          disabled={isPending}
           isRequired
         />
         <Input
@@ -105,14 +92,14 @@ export default function SignUpForm() {
           name='email'
           label='Email'
           type='email'
-          disabled={isSigningUp}
+          disabled={isPending}
           isRequired
         />
         <InputPassword
           control={form.control}
           name='password'
           label='Password'
-          disabled={isSigningUp}
+          disabled={isPending}
           isRequired
         />
 
@@ -120,11 +107,11 @@ export default function SignUpForm() {
           control={form.control}
           name='confirmPassword'
           label='Confirm password'
-          disabled={isSigningUp}
+          disabled={isPending}
           isRequired
         />
 
-        <Button type='submit' isLoading={isSigningUp}>
+        <Button type='submit' isLoading={isPending}>
           Sign up
         </Button>
       </Form>

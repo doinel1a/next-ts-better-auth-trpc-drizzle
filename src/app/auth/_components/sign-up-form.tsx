@@ -11,8 +11,7 @@ import { z } from 'zod';
 import Button from '@/components/commons/button';
 import Form from '@/components/ui/controlled-form';
 import Input from '@/components/ui/controlled-form/input';
-import { route } from '@/lib/constants/routes';
-import { searchParamsKey } from '@/lib/constants/shared';
+import { route, searchParamsKey } from '@/lib/constants/routes';
 import { signUp } from '@/server/auth/client';
 
 import Container from './container';

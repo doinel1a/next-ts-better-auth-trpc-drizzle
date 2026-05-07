@@ -14,7 +14,7 @@ import { Toaster } from '@/components/ui/sonner';
 
 import config from '../../_config';
 
-const nunitoSans = Nunito_Sans({ variable: '--font-sans' });
+const nunitoSans = Nunito_Sans({ variable: '--font-sans', subsets: ['latin'] });
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

@@ -3,7 +3,9 @@ import type { NextRequest } from 'next/server';
 import { getSessionCookie } from 'better-auth/cookies';
 import { NextResponse } from 'next/server';
 
-import { route, searchParamsKey } from '@/lib/constants/routes';
+import { searchParamsKey } from '@/lib/constants/routes';
+
+import { route } from './lib/constants/routes';
 
 const publicRoutes = new Set([route.signUp, route.signIn]);
 
@@ -40,5 +42,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [String.raw`/((?!api|_next/static|_next/image|favicon\.ico|favicon\.svg).*)`]
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
 };

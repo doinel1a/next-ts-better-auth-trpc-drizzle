@@ -15,6 +15,7 @@ import InputPassword from '@/components/ui/controlled-form/input-password';
 import { useAuthRedirect } from '@/hooks/use-auth-redirect';
 import { useSignIn } from '@/hooks/use-sign-in';
 import { route } from '@/lib/constants/routes';
+import clientLogger from '@/lib/utils/logger/client';
 
 import Container from './container';
 
@@ -29,7 +30,7 @@ export default function SignInForm() {
         router.replace(redirectUrl);
       }}
       onError={(ctx) => {
-        console.error('CLIENT ERROR | Sign in:', ctx.error);
+        clientLogger.error('Sign in', ctx.error);
         toast.error(ctx.error.message);
       }}
     />

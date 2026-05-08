@@ -1,6 +1,8 @@
 import { createEnv } from '@t3-oss/env-nextjs';
 import { z } from 'zod';
 
+const nodeEnvironment = z.enum(['development', 'test', 'production']).default('development');
+
 export const env = createEnv({
   /**
    * Specify your client-side environment variables schema here. This way you can ensure the app
@@ -10,7 +12,8 @@ export const env = createEnv({
   client: {
     // NEXT_PUBLIC_CLIENT_VAR: z.string(),
     NEXT_PUBLIC_SIGN_UP_URL: z.string(),
-    NEXT_PUBLIC_SIGN_IN_URL: z.string()
+    NEXT_PUBLIC_SIGN_IN_URL: z.string(),
+    NEXT_PUBLIC_NODE_ENV: nodeEnvironment
   },
   /**
    * Specify your server-side environment variables schema here.
@@ -21,7 +24,7 @@ export const env = createEnv({
     DATABASE_URL: z.url(),
     BETTER_AUTH_URL: z.url(),
     BETTER_AUTH_SECRET: z.string(),
-    NODE_ENV: z.enum(['development', 'test', 'production']).default('development')
+    NODE_ENV: nodeEnvironment
   },
 
   /**
@@ -32,6 +35,7 @@ export const env = createEnv({
     // client
     NEXT_PUBLIC_SIGN_UP_URL: process.env['NEXT_PUBLIC_SIGN_UP_URL'],
     NEXT_PUBLIC_SIGN_IN_URL: process.env['NEXT_PUBLIC_SIGN_IN_URL'],
+    NEXT_PUBLIC_NODE_ENV: process.env.NODE_ENV,
 
     // server
     DATABASE_URL: process.env['DATABASE_URL'],

@@ -4,7 +4,7 @@ import type { ThemeProviderProps } from 'next-themes';
 
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
-import STORAGE_KEYS from '@/lib/constants/keys';
+import { storageKey } from '@/lib/constants/shared';
 
 type TThemeProvider = Readonly<ThemeProviderProps>;
 
@@ -13,7 +13,7 @@ export default function ThemeProvider({ children, ...properties }: TThemeProvide
     <NextThemesProvider
       attribute='class'
       defaultTheme='system'
-      storageKey={STORAGE_KEYS.theme}
+      storageKey={storageKey.theme}
       disableTransitionOnChange
       enableSystem
       {...properties}

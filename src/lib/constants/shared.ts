@@ -1,7 +1,5 @@
 const BASE = 'NEXT-TS-SHADCN-UI';
 
-const STORAGE_KEYS = {
+export const storageKey = {
   theme: `${BASE}-THEME`
 } as const;
-
-export default STORAGE_KEYS;

@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/prevent-abbreviations */
-
 'use client';
 
 import type { ToasterProps } from 'sonner';
@@ -14,7 +12,7 @@ import {
 import { useTheme } from 'next-themes';
 import { Toaster as Sonner } from 'sonner';
 
-const Toaster = ({ ...props }: ToasterProps) => {
+const Toaster = ({ ...properties }: ToasterProps) => {
   const { theme = 'system' } = useTheme();
 
   return (
@@ -41,7 +39,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
           toast: 'cn-toast'
         }
       }}
-      {...props}
+      {...properties}
     />
   );
 };

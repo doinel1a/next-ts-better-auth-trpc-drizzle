@@ -5,6 +5,7 @@ import * as authSchema from '~/drizzle/schemas/auth';
 import { studentsSchema } from '~/drizzle/schemas/students';
 
 import { env } from '@/env';
+import serverLogger from '@/lib/utils/logger/server';
 
 /**
  * Cache the database connection in development. This avoids creating a new connection on every HMR
@@ -15,6 +16,10 @@ const globalForDb = globalThis as unknown as {
 };
 
 const conn = globalForDb.conn ?? new postgres.Pool({ connectionString: env.DATABASE_URL });
+conn.on('error', (error) => {
+  serverLogger.error('Database connection error', error);
+});
+
 if (env.NODE_ENV !== 'production') {
   globalForDb.conn = conn;
 }

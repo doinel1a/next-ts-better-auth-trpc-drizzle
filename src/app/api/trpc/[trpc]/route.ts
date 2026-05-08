@@ -23,12 +23,14 @@ const handler = (request: NextRequest) =>
     req: request,
     router: appRouter,
     createContext: () => createContext(request),
-    onError:
-      env.NODE_ENV === 'development'
-        ? ({ path, error }) => {
-            serverLogger.error(`tRPC failed on ${path ?? '<no-path>'}`, error);
-          }
-        : undefined
+    onError: ({ path, error }) => {
+      const label = `tRPC failed on ${path ?? '<no-path>'}`;
+      if (env.NODE_ENV === 'development') {
+        serverLogger.error(label, error);
+      } else {
+        serverLogger.error(label, { code: error.code, message: error.message });
+      }
+    }
   });
 
 export { handler as GET, handler as POST };

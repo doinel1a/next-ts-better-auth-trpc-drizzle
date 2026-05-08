@@ -16,8 +16,15 @@ const globalForDb = globalThis as unknown as {
 };
 
 const conn = globalForDb.conn ?? new postgres.Pool({ connectionString: env.DATABASE_URL });
-conn.on('error', (error) => {
-  serverLogger.error('Database connection error', error);
+conn.on('error', (connectionError) => {
+  serverLogger.error('Database connection error', connectionError);
+
+  void conn.end().catch((endError) => {
+    serverLogger.error('Failed to close DB pool after error', endError);
+  });
+
+  // Force pool re-creation on next cold start
+  globalForDb.conn = undefined;
 });
 
 if (env.NODE_ENV !== 'production') {

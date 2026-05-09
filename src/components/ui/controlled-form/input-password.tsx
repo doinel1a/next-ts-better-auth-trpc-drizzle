@@ -45,7 +45,7 @@ export default function InputPassword<TFormSchema extends FieldValues>({
           <div className='relative'>
             <FormControl>
               <SCN_Input
-                type='password'
+                type={isPasswordVisible ? 'text' : 'password'}
                 className='pr-10.5 placeholder:italic'
                 disabled={disabled}
                 {...otherProperties}

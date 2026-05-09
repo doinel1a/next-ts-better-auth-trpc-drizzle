@@ -30,7 +30,11 @@ export function proxy(request: NextRequest) {
 
   if (!isAuthenticated) {
     const signInUrl = new URL(route.signIn, request.url);
-    signInUrl.searchParams.set(searchParamsKey.redirectUrl, request.nextUrl.toString());
+    signInUrl.searchParams.set(
+      searchParamsKey.redirectUrl,
+      request.nextUrl.pathname + request.nextUrl.search
+    );
+
     return NextResponse.redirect(signInUrl);
   }
 

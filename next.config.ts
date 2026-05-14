@@ -7,8 +7,9 @@ import './src/env';
 import type { NextConfig } from 'next';
 
 const config = {
+  reactStrictMode: true,
   reactCompiler: true,
-  reactStrictMode: true
+  poweredByHeader: false
 } satisfies NextConfig;
 
 export default config;

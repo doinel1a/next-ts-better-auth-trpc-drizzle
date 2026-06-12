@@ -1,6 +1,6 @@
 'use client';
 
-import '@/global.css';
+import '@/styles/globals.css';
 
 import { IconArrowLeft, IconRefresh } from '@tabler/icons-react';
 import Link from 'next/link';

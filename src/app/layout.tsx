@@ -14,7 +14,10 @@ import Navbar from '@/components/navbar';
 import RootProvider from '@/components/providers/root';
 import { Toaster } from '@/components/ui/sonner';
 
-const nunitoSans = Nunito_Sans({ variable: '--font-sans', subsets: ['latin'] });
+const nunitoSans = Nunito_Sans({
+  variable: '--font-sans',
+  subsets: ['latin']
+});
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/no-top-level-side-effects */
+
 import { drizzle } from 'drizzle-orm/node-postgres';
 import postgres from 'pg';
 

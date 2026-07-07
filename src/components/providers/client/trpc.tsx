@@ -1,5 +1,4 @@
 /* eslint-disable react-x/use-state */
-/* eslint-disable unicorn/prefer-global-this */
 
 'use client';
 
@@ -26,7 +25,7 @@ const getQueryClient = () => {
     return createQueryClient();
   }
   // browser: use singleton pattern to keep the same query client
-  // eslint-disable-next-line sonarjs/no-nested-assignment
+  // eslint-disable-next-line sonarjs/no-nested-assignment, unicorn/no-top-level-assignment-in-function
   return (clientQueryClientSingleton ??= createQueryClient());
 };
 

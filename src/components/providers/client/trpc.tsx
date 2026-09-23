@@ -19,15 +19,13 @@ import { getAppBaseUrl } from '@/lib/utils/shared';
 import { createQueryClient } from '@/server/trpc/query-client';
 
 let clientQueryClientSingleton: QueryClient | undefined;
-const getQueryClient = () => {
-  if (typeof window === 'undefined') {
-    // server: always make a new query client
-    return createQueryClient();
-  }
-  // browser: use singleton pattern to keep the same query client
-  // eslint-disable-next-line sonarjs/no-nested-assignment, unicorn/no-top-level-assignment-in-function
-  return (clientQueryClientSingleton ??= createQueryClient());
-};
+const getQueryClient = () =>
+  typeof window === 'undefined'
+    ? // server: always make a new query client
+      createQueryClient()
+    : // browser: use singleton pattern to keep the same query client
+      // eslint-disable-next-line sonarjs/no-nested-assignment, unicorn/no-top-level-assignment-in-function
+      (clientQueryClientSingleton ??= createQueryClient());
 
 export const api = createTRPCReact<AppRouter>();
 export type RouterInputs = inferRouterInputs<AppRouter>;

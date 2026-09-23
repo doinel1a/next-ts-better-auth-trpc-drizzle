@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-ternary */
 /* eslint-disable @typescript-eslint/no-restricted-imports */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */

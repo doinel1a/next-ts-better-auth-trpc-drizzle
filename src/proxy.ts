@@ -18,11 +18,9 @@ export function proxy(request: NextRequest) {
   if (isPublicRoute) {
     if (isAuthenticated && (pathname === route.signUp || pathname === route.signIn)) {
       const redirectUrl = request.nextUrl.searchParams.get(searchParamsKey.redirectUrl);
-      if (isValidRedirectUrl(redirectUrl)) {
-        return NextResponse.redirect(new URL(redirectUrl, request.url));
-      }
-
-      return NextResponse.redirect(new URL(route.home, request.url));
+      return isValidRedirectUrl(redirectUrl)
+        ? NextResponse.redirect(new URL(redirectUrl, request.url))
+        : NextResponse.redirect(new URL(route.home, request.url));
     }
 
     return NextResponse.next();

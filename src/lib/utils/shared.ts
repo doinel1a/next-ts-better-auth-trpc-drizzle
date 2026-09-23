@@ -5,9 +5,7 @@ export function getAppBaseUrl() {
     return window.location.origin;
   }
 
-  if (process.env['VERCEL_URL'] !== undefined && process.env['VERCEL_URL'] !== '') {
-    return `https://${process.env['VERCEL_URL']}`;
-  }
-
-  return `http://localhost:${process.env['PORT'] ?? 3000}`;
+  return process.env['VERCEL_URL'] !== undefined && process.env['VERCEL_URL'] !== ''
+    ? `https://${process.env['VERCEL_URL']}`
+    : `http://localhost:${process.env['PORT'] ?? 3000}`;
 }

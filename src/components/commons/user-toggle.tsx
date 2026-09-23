@@ -34,11 +34,9 @@ export default function UserToggle() {
     });
   }, [router]);
 
-  if (isPending) {
-    return <Skeleton className='size-8 rounded-md' />;
-  }
-
-  return (
+  return isPending ? (
+    <Skeleton className='size-8 rounded-md' />
+  ) : (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant='outline' size='icon'>

@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/prefer-ternary */
+
 import { FormLabel as SCN_FormLabel } from '@/components/ui/form';
 import { cn } from '@/lib/utils/cn';
 

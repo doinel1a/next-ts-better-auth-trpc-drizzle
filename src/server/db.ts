@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/no-top-level-side-effects */
-
 import { drizzle } from 'drizzle-orm/node-postgres';
 import postgres from 'pg';
 
@@ -17,17 +15,16 @@ const globalForDb = globalThis as unknown as {
   conn: postgres.Pool | undefined;
 };
 
-const conn = globalForDb.conn ?? new postgres.Pool({ connectionString: env.DATABASE_URL });
-conn.on('error', (connectionError) => {
-  serverLogger.error('Database connection error', connectionError);
-
-  void conn.end().catch((endError) => {
-    serverLogger.error('Failed to close DB pool after error', endError);
+function createPool() {
+  const pool = new postgres.Pool({ connectionString: env.DATABASE_URL });
+  pool.on('error', (connectionError) => {
+    serverLogger.error('Idle database client error', connectionError);
   });
 
-  // Force pool re-creation on next cold start
-  globalForDb.conn = undefined;
-});
+  return pool;
+}
+
+const conn = globalForDb.conn ?? createPool();
 
 if (env.NODE_ENV !== 'production') {
   globalForDb.conn = conn;

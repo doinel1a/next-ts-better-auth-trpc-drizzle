@@ -15,6 +15,7 @@ import InputPassword from '@/components/ui/controlled-form/input-password';
 import { useAuthRedirect } from '@/hooks/use-auth-redirect';
 import { useSignIn } from '@/hooks/use-sign-in';
 import { route } from '@/lib/constants/routes';
+import { getAuthErrorMessage } from '@/lib/utils/auth-errors';
 import clientLogger from '@/lib/utils/logger/client';
 
 import Container from './container';
@@ -31,7 +32,7 @@ export default function SignInForm() {
       }}
       onError={(ctx) => {
         clientLogger.error('Sign in', ctx.error);
-        toast.error(ctx.error.message);
+        toast.error(getAuthErrorMessage(ctx.error, 'Sign in failed. Please try again.'));
       }}
       onException={(error) => {
         clientLogger.error('Sign in', error);

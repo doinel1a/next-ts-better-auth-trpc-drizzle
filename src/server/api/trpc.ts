@@ -10,11 +10,12 @@ import { getSession } from '@/server/auth/server';
 import { db } from '../db';
 
 export const createTRPCContext = async (options: { headers: Headers }) => {
-  const session = await getSession();
+  const data = await getSession();
 
   return {
-    session,
     db,
+    session: data?.session ?? null,
+    user: data?.user ?? null,
     ...options
   };
 };
@@ -57,14 +58,14 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
 
 export const publicProcedure = t.procedure.use(timingMiddleware);
 export const protectedProcedure = t.procedure.use(timingMiddleware).use(({ ctx, next }) => {
-  if (ctx.session?.session.userId === undefined) {
+  if (ctx.session === null || ctx.user === null) {
     throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
 
   return next({
     ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session.session, user: ctx.session.user }
+      session: ctx.session,
+      user: ctx.user
     }
   });
 });

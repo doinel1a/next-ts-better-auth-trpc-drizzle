@@ -18,7 +18,7 @@ export default function FormLabel({ name, label, isRequired, className }: TFormL
 
   return (
     <div className={cn('flex items-center gap-x-2.5', className)}>
-      <SCN_FormLabel data-testid={`${name}-error-message`} className='leading-none'>
+      <SCN_FormLabel data-testid={`${name}-label`} className='leading-none'>
         {label}
       </SCN_FormLabel>
       {!isRequired && <OptionalBadge />}

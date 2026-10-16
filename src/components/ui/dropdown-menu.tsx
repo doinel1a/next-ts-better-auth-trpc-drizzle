@@ -6,9 +6,8 @@
 import * as React from 'react';
 
 import { IconCheck, IconChevronRight } from '@tabler/icons-react';
+import { cn } from 'cn';
 import { DropdownMenu as DropdownMenuPrimitive } from 'radix-ui';
-
-import { cn } from '@/lib/utils/cn';
 
 function DropdownMenu({ ...properties }: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {
   return <DropdownMenuPrimitive.Root data-slot='dropdown-menu' {...properties} />;

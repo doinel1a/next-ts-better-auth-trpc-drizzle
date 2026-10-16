@@ -1,5 +1,6 @@
+import { cn } from 'cn';
+
 import { FormMessage } from '@/components/ui/form';
-import { cn } from '@/lib/utils/cn';
 
 type TFormErrorMessage = Readonly<{
   name: string;

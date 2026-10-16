@@ -3,8 +3,9 @@
 import type { ComponentProps } from 'react';
 import type { FieldValues, UseFormReturn } from 'react-hook-form';
 
+import { cn } from 'cn';
+
 import { Form as SCN_Form } from '@/components/ui/form';
-import { cn } from '@/lib/utils/cn';
 
 type TForm<TFormSchema extends FieldValues> = ComponentProps<'form'> & {
   form: UseFormReturn<TFormSchema>;

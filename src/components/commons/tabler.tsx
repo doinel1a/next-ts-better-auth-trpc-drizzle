@@ -1,6 +1,5 @@
 import { icons } from '@tabler/icons-react';
-
-import { cn } from '@/lib/utils/cn';
+import { cn } from 'cn';
 
 export type TTablerIconName = keyof typeof icons;
 

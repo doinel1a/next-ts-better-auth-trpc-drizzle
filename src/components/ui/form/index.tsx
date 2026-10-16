@@ -9,11 +9,11 @@ import * as React from 'react';
 import type { Label as LabelPrimitive } from 'radix-ui';
 import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
 
+import { cn } from 'cn';
 import { Slot } from 'radix-ui';
 import { Controller, FormProvider, useFormContext, useFormState } from 'react-hook-form';
 
 import { Label } from '@/components/ui/form/label';
-import { cn } from '@/lib/utils/cn';
 
 const Form = FormProvider;
 

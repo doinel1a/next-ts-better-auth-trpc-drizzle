@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { cn } from '@/lib/utils/cn';
+import { cn } from 'cn';
 
 function Input({ className, type, ...properties }: React.ComponentProps<'input'>) {
   return (

@@ -3,9 +3,10 @@
 import type { ComponentProps } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 
+import { cn } from 'cn';
+
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input as SCN_Input } from '@/components/ui/form/input';
-import { cn } from '@/lib/utils/cn';
 
 import FormErrorMessage from './shared/error-message';
 import FormLabel from './shared/label';

@@ -1,5 +1,6 @@
+import { cn } from 'cn';
+
 import { FormLabel as SCN_FormLabel } from '@/components/ui/form';
-import { cn } from '@/lib/utils/cn';
 
 import OptionalBadge from './optional-badge';
 

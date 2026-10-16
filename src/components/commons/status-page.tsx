@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 
-import { cn } from '@/lib/utils/cn';
+import { cn } from 'cn';
 
 type TStatusPageContent = Readonly<{
   code: string;

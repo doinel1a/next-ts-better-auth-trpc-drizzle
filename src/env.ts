@@ -23,7 +23,7 @@ export const env = createEnv({
     // SERVER_VAR: z.string(),
     DATABASE_URL: z.url(),
     BETTER_AUTH_URL: z.url(),
-    BETTER_AUTH_SECRET: z.string(),
+    BETTER_AUTH_SECRET: z.string().min(32),
     NODE_ENV: nodeEnvironment
   },
 

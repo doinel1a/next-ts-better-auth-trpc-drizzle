@@ -16,14 +16,14 @@ export default function createLogger(context: TLogContext, env: TEnvironment) {
   return isClient && isProduction
     ? noopLogger
     : {
-        error: (message: string, error?: unknown) => {
-          console.error(`${context} ERROR | ${message}`, error);
+        error: (message: string, ...error: unknown[]) => {
+          console.error(`${context} ERROR | ${message}`, ...error);
         },
-        warn: (message: string, data?: unknown) => {
-          console.warn(`${context} WARN | ${message}`, data);
+        warn: (message: string, ...data: unknown[]) => {
+          console.warn(`${context} WARN | ${message}`, ...data);
         },
-        info: (message: string, data?: unknown) => {
-          console.log(`${context} INFO | ${message}`, data);
+        info: (message: string, ...data: unknown[]) => {
+          console.log(`${context} INFO | ${message}`, ...data);
         }
       };
 }

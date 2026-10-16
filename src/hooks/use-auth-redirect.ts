@@ -10,6 +10,6 @@ export function useAuthRedirect(fallback: string) {
 
   return {
     redirectUrl: resolveRedirectUrl(rawParam, fallback),
-    buildAuthUrl: (authRoute: string) => buildAuthUrl(authRoute, rawParam)
+    buildAuthUrl: (authRoute: string) => buildAuthUrl(authRoute, rawParam ?? undefined)
   };
 }

@@ -31,9 +31,9 @@ export const auth = betterAuth({
   },
   plugins: [
     /**
-     * Must be the last plugin
-     * @docs https://www.better-auth.com/docs/integrations/next#server-action-cookies
-     */
+      Must be the last plugin
+      @docs https://www.better-auth.com/docs/integrations/next#server-action-cookies
+    */
     nextCookies()
   ]
 });

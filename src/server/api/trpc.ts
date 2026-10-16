@@ -36,8 +36,8 @@ export const createCallerFactory = t.createCallerFactory;
 export const createTRPCRouter = t.router;
 
 /**
- * Middleware for timing procedure execution and adding an artificial delay in development.
- */
+  Middleware for timing procedure execution and adding an artificial delay in development.
+*/
 const timingMiddleware = t.middleware(async ({ next, path }) => {
   const start = Date.now();
 

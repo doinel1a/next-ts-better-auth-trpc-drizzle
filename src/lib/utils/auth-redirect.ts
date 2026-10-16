@@ -10,8 +10,8 @@ export function resolveRedirectUrl(url: string | null, fallback: string) {
   return isValidRedirectUrl(url) ? url : fallback;
 }
 
-export function buildAuthUrl(authRoute: string, redirectUrl: string | null) {
+export function buildAuthUrl(authRoute: string, redirectUrl = '') {
   const url = new URL(authRoute, getAppBaseUrl());
-  url.searchParams.set(searchParamsKey.redirectUrl, redirectUrl ?? '');
+  url.searchParams.set(searchParamsKey.redirectUrl, redirectUrl);
   return url;
 }

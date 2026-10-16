@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/no-top-level-side-effects */
+
 import tanstackQuery from '@tanstack/eslint-plugin-query';
 import eslintConfigNext from 'eslint-config-next';
 // @ts-expect-error - No types for this plugin
@@ -16,11 +18,11 @@ export default defineConfig(
     ignores: ['.next', '*.js']
   },
   /**
-   * eslint-config-next automatically configures:
-   * - eslint-plugin-react
-   * - eslint-plugin-react-hooks
-   * - eslint-plugin-jsx-a11y
-   */
+    eslint-config-next automatically configures:
+    - eslint-plugin-react
+    - eslint-plugin-react-hooks
+    - eslint-plugin-jsx-a11y
+  */
   ...eslintConfigNext,
   ...tanstackQuery.configs['flat/recommended'],
   sonarjs.recommended,

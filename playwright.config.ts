@@ -1,16 +1,18 @@
+/* eslint-disable unicorn/no-top-level-side-effects */
+
 import { defineConfig, devices } from '@playwright/test';
 
 import config from './_config';
 
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
+  Read environment variables from file.
+  https://github.com/motdotla/dotenv
+*/
 // require('dotenv').config();
 
 /**
- * See https://playwright.dev/docs/test-configuration.
- */
+  See https://playwright.dev/docs/test-configuration.
+*/
 export default defineConfig({
   testDir: '__tests__',
   /*
@@ -19,9 +21,9 @@ export default defineConfig({
   timeout: 30 * 1000,
   expect: {
     /**
-     * Maximum time expect() should wait for the condition to be met.
-     * For example in `await expect(locator).toHaveText();`
-     */
+      Maximum time expect() should wait for the condition to be met.
+      For example in `await expect(locator).toHaveText();`
+    */
     timeout: 5000
   },
   /*

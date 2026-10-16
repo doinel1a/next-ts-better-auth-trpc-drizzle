@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/no-top-level-side-effects */
+
 import { defineConfig } from 'drizzle-kit';
 
 import { env } from '@/env';

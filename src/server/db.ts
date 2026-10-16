@@ -10,9 +10,9 @@ import { env } from '@/env';
 import serverLogger from '@/lib/utils/logger/server';
 
 /**
- * Cache the database connection in development. This avoids creating a new connection on every HMR
- * update.
- */
+  Cache the database connection in development. This avoids creating a new connection on every HMR
+  update.
+*/
 const globalForDb = globalThis as unknown as {
   conn: postgres.Pool | undefined;
 };

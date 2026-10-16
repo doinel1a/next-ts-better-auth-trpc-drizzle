@@ -33,6 +33,10 @@ export default function SignInForm() {
         clientLogger.error('Sign in', ctx.error);
         toast.error(ctx.error.message);
       }}
+      onException={(error) => {
+        clientLogger.error('Sign in', error);
+        toast.error('Something went wrong. Check your connection and try again.');
+      }}
     />
   );
 }
@@ -45,7 +49,7 @@ const schema = z.object({
 
 type TSignInFormContent = Readonly<NonNullable<Parameters<typeof useSignIn>[0]>>;
 
-function SignInFormContent({ onSuccess, onError }: TSignInFormContent) {
+function SignInFormContent({ onSuccess, onError, onException }: TSignInFormContent) {
   const form = useForm<TSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -54,7 +58,7 @@ function SignInFormContent({ onSuccess, onError }: TSignInFormContent) {
     }
   });
 
-  const { isPending, submit } = useSignIn({ onSuccess, onError });
+  const { isPending, submit } = useSignIn({ onSuccess, onError, onException });
 
   const onSubmit = useCallback(
     ({ email, password }: TSchema) => {

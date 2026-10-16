@@ -1,5 +1,25 @@
-import { icons } from '@tabler/icons-react';
+import {
+  IconAt,
+  IconDeviceLaptop,
+  IconEye,
+  IconEyeOff,
+  IconLoader,
+  IconMoonStars,
+  IconSun,
+  IconUser
+} from '@tabler/icons-react';
 import { cn } from 'cn';
+
+const icons = {
+  IconAt,
+  IconDeviceLaptop,
+  IconEye,
+  IconEyeOff,
+  IconLoader,
+  IconMoonStars,
+  IconSun,
+  IconUser
+} as const;
 
 export type TTablerIconName = keyof typeof icons;
 

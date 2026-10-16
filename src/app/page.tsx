@@ -5,13 +5,14 @@ import { getSession } from '@/server/auth/server';
 import { api } from '@/server/trpc';
 
 export default async function HomePage() {
-  const students = await api.students.getFirst();
-  console.log('students', students);
-
   const session = await getSession();
   if (!session) {
     redirect(route.signIn, RedirectType.replace);
   }
+
+  const students = await api.students.getFirst();
+  // eslint-disable-next-line no-console
+  console.log('students', students);
 
   return (
     <main className='flex h-full w-full flex-col items-center justify-center gap-y-5'>

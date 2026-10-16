@@ -1,7 +1,5 @@
 import { searchParamsKey } from '@/lib/constants/routes';
 
-import { getAppBaseUrl } from './shared';
-
 const PLACEHOLDER_ORIGIN = 'https://redirect.invalid';
 
 export function isValidRedirectUrl(url: string | null): url is string {
@@ -21,10 +19,10 @@ export function resolveRedirectUrl(url: string | null, fallback: string) {
 }
 
 export function buildAuthUrl(authRoute: string, redirectUrl = '') {
-  const url = new URL(authRoute, getAppBaseUrl());
-  if (redirectUrl !== '') {
-    url.searchParams.set(searchParamsKey.redirectUrl, redirectUrl);
+  if (redirectUrl === '') {
+    return authRoute;
   }
 
-  return url;
+  const searchParams = new URLSearchParams({ [searchParamsKey.redirectUrl]: redirectUrl });
+  return `${authRoute}?${searchParams.toString()}`;
 }

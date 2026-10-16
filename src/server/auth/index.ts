@@ -16,7 +16,7 @@ export const auth = betterAuth({
     // @docs https://www.better-auth.com/docs/guides/optimizing-for-performance#cookie-cache
     cookieCache: {
       enabled: true,
-      maxAge: 60 * 60 * 24 // 1 day
+      maxAge: 60 * 5 // 5 minutes
     }
   },
   emailAndPassword: {

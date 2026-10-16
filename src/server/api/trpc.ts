@@ -4,13 +4,14 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import z, { ZodError } from 'zod';
 
+import { env } from '@/env';
 import serverLogger from '@/lib/utils/logger/server';
-import { getSession } from '@/server/auth/server';
+import { auth } from '@/server/auth';
 
 import { db } from '../db';
 
 export const createTRPCContext = async (options: { headers: Headers }) => {
-  const data = await getSession();
+  const data = await auth.api.getSession({ headers: options.headers });
 
   return {
     db,
@@ -42,7 +43,7 @@ export const createTRPCRouter = t.router;
 const timingMiddleware = t.middleware(async ({ next, path }) => {
   const start = Date.now();
 
-  if (t._config.isDev) {
+  if (env.NODE_ENV === 'development') {
     // artificial delay in dev
     const waitMs = Math.floor(Math.random() * 400) + 100;
     await new Promise((resolve) => setTimeout(resolve, waitMs));

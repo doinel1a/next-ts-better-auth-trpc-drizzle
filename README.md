@@ -62,6 +62,7 @@ It combines **[Next.js 16 App Router][nextjs]**, **[Better Auth][better-auth]**,
   - [Database setup](#database-setup)
   - [Switching package manager](#switching-package-manager)
 - [Project structure](#project-structure)
+  - [Database clients](#database-clients)
 - [Available scripts](#available-scripts)
 - [Tech stack](#tech-stack)
 
@@ -205,7 +206,7 @@ bun install
 │   ├── schemas/             # Drizzle table definitions (auth + students)
 │   ├── seeders/             # Database seeders and reset script
 │   ├── config.ts            # Drizzle Kit configuration
-│   └── index.ts             # Database client
+│   └── index.ts             # Standalone database client (for scripts)
 ├── src/
 │   ├── app/
 │   │   ├── api/
@@ -223,13 +224,39 @@ bun install
 │   ├── server/
 │   │   ├── api/             # tRPC root router and procedures
 │   │   ├── auth/            # Server-side auth helpers
-│   │   └── trpc/            # tRPC server client and query client
+│   │   ├── trpc/            # tRPC server client and query client
+│   │   └── db.ts            # Pooled database client used by the app
 │   ├── styles/              # Global styles
 │   ├── config.ts            # App configuration
 │   ├── env.ts               # Env validation (Zod + T3 env-nextjs)
 │   └── proxy.ts             # Auth proxy
 └── public/                  # Static assets
 ```
+
+### Database clients
+
+The project exposes two Drizzle clients. Pick the one that matches where your code runs:
+
+| Client             | Used by                                     | Connection                                                  |
+| ------------------ | ------------------------------------------- | ----------------------------------------------------------- |
+| `src/server/db.ts` | The running app (tRPC context, Better Auth) | One shared `pg` pool, cached on `globalThis` to survive HMR |
+| `drizzle/index.ts` | Standalone scripts (migrations, one-offs)   | Its own `pg` pool, created when the module is imported      |
+
+```ts
+// Inside the Next.js app
+import { db } from '@/server/db';
+```
+
+```ts
+// Inside a standalone script (run with tsx)
+import db from '~/drizzle';
+```
+
+> [!IMPORTANT]
+> Never import `drizzle/index.ts` from application code. It would open a second pool next to the one in `src/server/db.ts`, and in development a new one on every hot reload.
+
+> [!NOTE]
+> `src/server/db.ts` is also loaded by the Better Auth CLI (`ba:generate`), which cannot resolve modules that import `server-only`. Keep that import out of its dependency chain (this is why it logs with `console.error` instead of `serverLogger`).
 
 ---
 

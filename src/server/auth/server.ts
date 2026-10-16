@@ -7,18 +7,10 @@ import { redirect, RedirectType } from 'next/navigation';
 
 import { route, searchParamsKey } from '@/lib/constants/routes';
 import { resolveRedirectUrl } from '@/lib/utils/auth-redirect';
-import { serverLogger } from '@/lib/utils/logger/server';
 
 import { auth } from '.';
 
-export const getSession = cache(async () => {
-  try {
-    return await auth.api.getSession({ headers: await headers() });
-  } catch (error) {
-    serverLogger.error('Cannot get session', error);
-    return null;
-  }
-});
+export const getSession = cache(async () => auth.api.getSession({ headers: await headers() }));
 
 type TSearchParams = Record<string, string | string[] | undefined>;
 

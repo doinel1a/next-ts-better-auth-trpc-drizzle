@@ -1,7 +1,15 @@
+import db from '~/drizzle';
+
 import random from './random';
 
 async function main() {
-  await random();
+  try {
+    await random();
+  } catch (error) {
+    console.error('DB ERROR | Seeder:', error);
+  } finally {
+    await db.$client.end();
+  }
 }
 
 await main();

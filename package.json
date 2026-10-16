@@ -34,8 +34,8 @@
     "db:push": "drizzle-kit --config=drizzle/config.ts push",
     "db:create-migration": "drizzle-kit --config=drizzle/config.ts generate",
     "db:migrate": "drizzle-kit --config=drizzle/config.ts migrate",
-    "db:seed": "cross-env SKIP_ENV_VALIDATION=true tsx drizzle/seeders/index.ts",
-    "db-danger:reset": "cross-env SKIP_ENV_VALIDATION=true tsx drizzle/seeders/reset.ts"
+    "db:seed": "tsx --env-file=.env drizzle/seeders/index.ts",
+    "db-danger:reset": "tsx --env-file=.env drizzle/seeders/reset.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "5.9.1",

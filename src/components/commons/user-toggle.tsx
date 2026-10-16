@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import { useAuthRedirect } from '@/hooks/use-auth-redirect';
 import { route } from '@/lib/constants/routes';
 import { signOut, useSession } from '@/server/auth/client';
 
@@ -23,6 +24,8 @@ export default function UserToggle() {
   const { isPending, data: session } = useSession();
 
   const router = useRouter();
+  const { buildAuthUrl } = useAuthRedirect(route.home);
+
   const onSignOutClick = useCallback(() => {
     void signOut({
       fetchOptions: {
@@ -49,8 +52,8 @@ export default function UserToggle() {
             Sign out
           </DropdownMenuItem>
         ) : (
-          <DropdownMenuItem>
-            <Link href={route.signIn}>Sign in</Link>
+          <DropdownMenuItem asChild>
+            <Link href={buildAuthUrl(route.signIn)}>Sign in</Link>
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

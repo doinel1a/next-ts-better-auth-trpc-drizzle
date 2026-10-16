@@ -1,4 +1,7 @@
+import { Suspense } from 'react';
+
 import UserToggle from './commons/user-toggle';
+import { Skeleton } from './ui/skeleton';
 import ThemeToggle from './ui/theme-toggle';
 
 export default function Navbar() {
@@ -7,7 +10,9 @@ export default function Navbar() {
       <span className='text-lg font-black'>Template</span>
 
       <div className='flex gap-x-2.5 pr-20'>
-        <UserToggle />
+        <Suspense fallback={<Skeleton className='size-8 rounded-md' />}>
+          <UserToggle />
+        </Suspense>
         <ThemeToggle />
       </div>
     </header>

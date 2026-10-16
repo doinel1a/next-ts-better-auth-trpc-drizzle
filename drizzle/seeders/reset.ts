@@ -8,6 +8,7 @@ async function main() {
     await reset(db, { studentsSchema });
   } catch (error) {
     console.error('DB ERROR | Reset seeder:', error);
+    process.exitCode = 1;
   } finally {
     await db.$client.end();
   }

@@ -7,6 +7,7 @@ async function main() {
     await random();
   } catch (error) {
     console.error('DB ERROR | Seeder:', error);
+    process.exitCode = 1;
   } finally {
     await db.$client.end();
   }

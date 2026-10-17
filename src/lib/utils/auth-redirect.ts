@@ -8,14 +8,20 @@ export function isValidRedirectUrl(url: string | null): url is string {
   }
 
   try {
-    return new URL(url, PLACEHOLDER_ORIGIN).origin === PLACEHOLDER_ORIGIN;
+    const parsed = new URL(url, PLACEHOLDER_ORIGIN);
+    return parsed.origin === PLACEHOLDER_ORIGIN && !parsed.pathname.startsWith('//');
   } catch {
     return false;
   }
 }
 
 export function resolveRedirectUrl(url: string | null, fallback: string) {
-  return isValidRedirectUrl(url) ? url : fallback;
+  if (!isValidRedirectUrl(url)) {
+    return fallback;
+  }
+
+  const { pathname, search, hash } = new URL(url, PLACEHOLDER_ORIGIN);
+  return pathname + search + hash;
 }
 
 export function buildAuthUrl(authRoute: string, redirectUrl = '') {

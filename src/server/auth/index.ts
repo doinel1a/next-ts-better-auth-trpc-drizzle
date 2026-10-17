@@ -25,6 +25,23 @@ export const auth = betterAuth({
     // requireEmailVerification: true,
     // revokeSessionsOnPasswordReset: true
   },
+  rateLimit: {
+    enabled: true, // on in development to test the limits locally
+    storage: 'database',
+    // default for every endpoint without a custom rule: 60 requests per 60 seconds
+    window: 60,
+    max: 60,
+    customRules: {
+      '/sign-in/email': { window: 60, max: 5 }, // 5 sign-in attempts per 60 seconds
+      '/sign-up/email': { window: 60 * 60, max: 10 } // 10 sign-ups per hour (3600 seconds)
+    }
+  },
+  advanced: {
+    ipAddress: {
+      // Vercel overwrites this header, so clients cannot spoof the IP used by the rate limiter
+      ipAddressHeaders: ['x-vercel-forwarded-for']
+    }
+  },
   account: {
     accountLinking: {
       enabled: true

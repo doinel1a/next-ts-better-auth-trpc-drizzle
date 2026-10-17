@@ -157,6 +157,14 @@ pnpm db:seed
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### Run the E2E tests
+
+Dependency installation no longer downloads the Playwright browsers. Download them once before running the E2E tests for the first time:
+
+|             | **npm**                    | **bun**                    | **pnpm**                    | **yarn**                    |
+| ----------- | -------------------------- | -------------------------- | --------------------------- | --------------------------- |
+| **install** | `npm run test:e2e:install` | `bun run test:e2e:install` | `pnpm run test:e2e:install` | `yarn run test:e2e:install` |
+
 ### Switching package manager
 
 <details>
@@ -284,6 +292,7 @@ import db from '~/drizzle';
 | `test:integration`    | Run only the integration tests                        |
 | `test:coverage`       | Run Vitest with a coverage report                     |
 | `test:e2e`            | Run Playwright E2E tests                              |
+| `test:e2e:install`    | Download the Playwright browsers (needed once)        |
 | `test:e2e:ui`         | Run Playwright with interactive UI mode               |
 | `ba:generate`         | Run Better Auth CLI to regenerate auth artifacts      |
 | `db:studio`           | Open Drizzle Studio for visual database inspection    |

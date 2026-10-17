@@ -118,7 +118,9 @@ export default defineConfig({
     Run your local dev server before starting the tests
   */
   webServer: {
-    command: 'pnpm dev',
-    port: config.server.port
+    // CI tests the production build (`pnpm build` runs in the workflow), locally the dev server
+    command: process.env['CI'] === undefined ? 'pnpm dev' : 'pnpm preview',
+    port: config.server.port,
+    reuseExistingServer: process.env['CI'] === undefined
   }
 });

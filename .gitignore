@@ -6,6 +6,7 @@
 # testing
 /coverage
 /__tests_results__/
+/coverage/
 /playwright-report/
 /playwright/.cache/
 

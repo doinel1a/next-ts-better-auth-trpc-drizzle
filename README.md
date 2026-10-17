@@ -200,7 +200,12 @@ bun install
 
 ```
 .
-├── __tests__/               # Playwright E2E tests
+├── __tests__/
+│   ├── unit/                # Vitest unit tests (node)
+│   ├── components/          # Vitest component tests (jsdom + Testing Library)
+│   ├── integration/         # Vitest integration tests (in-memory PGlite)
+│   ├── e2e/                 # Playwright E2E tests
+│   └── setup/               # Shared Vitest setup files
 ├── drizzle/
 │   ├── migrations/          # SQL migration history
 │   ├── schemas/             # Drizzle table definitions (auth + students)
@@ -272,8 +277,14 @@ import db from '~/drizzle';
 | `lint:fix`            | Run ESLint and auto-fix issues                        |
 | `lint:profiling`      | Run ESLint with timing profiling                      |
 | `format`              | Format all source files with Prettier                 |
-| `test`                | Run Playwright E2E tests                              |
-| `test:ui`             | Run Playwright with interactive UI mode               |
+| `test`                | Run unit, component and integration tests (Vitest)    |
+| `test:watch`          | Run Vitest in watch mode                              |
+| `test:unit`           | Run only the unit tests                               |
+| `test:components`     | Run only the component tests                          |
+| `test:integration`    | Run only the integration tests                        |
+| `test:coverage`       | Run Vitest with a coverage report                     |
+| `test:e2e`            | Run Playwright E2E tests                              |
+| `test:e2e:ui`         | Run Playwright with interactive UI mode               |
 | `ba:generate`         | Run Better Auth CLI to regenerate auth artifacts      |
 | `db:studio`           | Open Drizzle Studio for visual database inspection    |
 | `db:push`             | Push the Drizzle schema to the database (development) |

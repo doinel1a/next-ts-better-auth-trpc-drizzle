@@ -14,7 +14,7 @@ import config from './_config';
   See https://playwright.dev/docs/test-configuration.
 */
 export default defineConfig({
-  testDir: '__tests__',
+  testDir: '__tests__/e2e',
   /*
     Maximum time one test can run for.
   */
@@ -118,7 +118,7 @@ export default defineConfig({
     Run your local dev server before starting the tests
   */
   webServer: {
-    command: 'npm run dev',
+    command: 'pnpm dev',
     port: config.server.port
   }
 });

@@ -1,6 +1,7 @@
 /* eslint-disable unicorn/no-top-level-side-effects */
 
 import tanstackQuery from '@tanstack/eslint-plugin-query';
+import vitest from '@vitest/eslint-plugin';
 import eslintConfigNext from 'eslint-config-next';
 // @ts-expect-error - No types for this plugin
 import drizzle from 'eslint-plugin-drizzle';
@@ -9,13 +10,14 @@ import reactCompiler from 'eslint-plugin-react-compiler';
 import reactDOM from 'eslint-plugin-react-dom';
 import reactX from 'eslint-plugin-react-x';
 import { configs as sonarjs } from 'eslint-plugin-sonarjs';
+import testingLibrary from 'eslint-plugin-testing-library';
 import unicorn from 'eslint-plugin-unicorn';
 import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig(
   {
-    ignores: ['.next', '*.js']
+    ignores: ['.next', 'coverage', '*.js']
   },
   /**
     eslint-config-next automatically configures:
@@ -102,6 +104,14 @@ export default defineConfig(
       '@typescript-eslint/array-type': 'off',
       '@typescript-eslint/consistent-type-definitions': 'off'
     }
+  },
+  {
+    files: ['__tests__/{unit,components,integration,setup}/**/*.{ts,tsx}'],
+    ...vitest.configs.recommended
+  },
+  {
+    files: ['__tests__/components/**/*.{ts,tsx}'],
+    ...testingLibrary.configs['flat/react']
   },
   prettierPlugin,
   {

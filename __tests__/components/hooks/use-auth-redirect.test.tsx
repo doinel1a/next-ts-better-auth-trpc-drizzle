@@ -1,13 +1,9 @@
 import { renderHook } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { useAuthRedirect } from '@/hooks/use-auth-redirect';
 
-const navigation = vi.hoisted(() => ({ searchParams: new URLSearchParams() }));
-
-vi.mock('next/navigation', () => ({
-  useSearchParams: () => navigation.searchParams
-}));
+import { navigation } from '../../setup/helpers/navigation';
 
 function renderAuthRedirect(query: string, fallback = '/home') {
   navigation.searchParams = new URLSearchParams(query);

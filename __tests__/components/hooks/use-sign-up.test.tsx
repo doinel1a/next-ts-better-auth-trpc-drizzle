@@ -4,6 +4,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useSignUp } from '@/hooks/use-sign-up';
 import { signUp } from '@/server/auth/client';
 
+import { createDeferred } from '../../setup/helpers/deferred';
+
 vi.mock('@/server/auth/client', () => ({
   signUp: { email: vi.fn() }
 }));
@@ -14,18 +16,6 @@ const credentials = { name: 'Al', email: 'user@example.com', password: 'password
 
 function createCallbacks() {
   return { onSuccess: vi.fn(), onError: vi.fn(), onException: vi.fn() };
-}
-
-function createDeferred() {
-  let resolve!: () => void;
-  let reject!: (error: unknown) => void;
-  // eslint-disable-next-line unicorn/prefer-promise-with-resolvers
-  const promise = new Promise<void>((resolvePromise, rejectPromise) => {
-    resolve = resolvePromise;
-    reject = rejectPromise;
-  });
-
-  return { promise, resolve, reject };
 }
 
 const signUpEmail = vi.mocked(signUp.email);

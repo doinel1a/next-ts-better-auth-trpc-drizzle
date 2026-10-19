@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { GET as getProtectedRoute } from '@/app/api/v1/test/route';
 import { withAuth } from '@/server/auth/with-auth';
 
+import { visitWith } from '../../setup/helpers/request';
 import {
   expireTestUserSession,
   revokeTestUserSession,
@@ -11,18 +12,7 @@ import {
   testUserEmail
 } from '../helpers/session';
 
-const ambient = vi.hoisted(() => ({ headers: new Headers() }));
-
-vi.mock('next/headers', () => ({
-  headers: () => Promise.resolve(ambient.headers),
-  cookies: () => Promise.resolve({ set: () => undefined, get: () => undefined, getAll: () => [] })
-}));
-
 const email = testUserEmail;
-
-function visitWith(cookie?: string) {
-  ambient.headers = new Headers(cookie === undefined ? {} : { cookie });
-}
 
 function createRequest() {
   return new NextRequest('http://localhost:3000/api/resource');

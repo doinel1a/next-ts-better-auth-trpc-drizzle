@@ -1,16 +1,11 @@
 import { eq } from 'drizzle-orm';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { accounts, sessions, users } from '~/drizzle/schemas/auth';
 
 import { db } from '@/server/db';
 
 import { get, post, statusOf } from '../helpers/auth-http';
-
-vi.mock('next/headers', () => ({
-  headers: () => Promise.resolve(new Headers()),
-  cookies: () => Promise.resolve({ set: () => undefined, get: () => undefined, getAll: () => [] })
-}));
 
 const name = 'Al';
 const email = 'user@example.com';

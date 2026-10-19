@@ -6,16 +6,8 @@ import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import SignUpForm from '@/app/auth/_components/sign-up-form';
 import { signUp } from '@/server/auth/client';
 
-const navigation = vi.hoisted(() => ({
-  replace: vi.fn(),
-  refresh: vi.fn(),
-  searchParams: new URLSearchParams()
-}));
-
-vi.mock('next/navigation', () => ({
-  useRouter: () => ({ replace: navigation.replace, refresh: navigation.refresh }),
-  useSearchParams: () => navigation.searchParams
-}));
+import { createDeferred } from '../../../setup/helpers/deferred';
+import { navigation } from '../../../setup/helpers/navigation';
 
 vi.mock('sonner', () => ({
   toast: { success: vi.fn(), error: vi.fn() }
@@ -41,16 +33,6 @@ function respondWith(handler: (callbacks: TCallbacks) => Promise<void> | void) {
   }) as never);
 }
 
-function createDeferred() {
-  let resolve!: () => void;
-  // eslint-disable-next-line unicorn/prefer-promise-with-resolvers
-  const promise = new Promise<void>((resolvePromise) => {
-    resolve = resolvePromise;
-  });
-
-  return { promise, resolve };
-}
-
 type TValues = { name?: string; email?: string; password?: string; confirmPassword?: string };
 
 async function fillAndSubmit(values: TValues = {}) {
@@ -72,7 +54,6 @@ async function fillAndSubmit(values: TValues = {}) {
 beforeEach(() => {
   vi.clearAllMocks();
   signUpEmail.mockResolvedValue(undefined);
-  navigation.searchParams = new URLSearchParams();
 });
 
 afterAll(() => {

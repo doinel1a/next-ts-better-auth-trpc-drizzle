@@ -1,22 +1,11 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { redirectIfAuthenticated } from '@/server/auth/server';
 
+import { visitWith } from '../../setup/helpers/request';
 import { expireTestUserSession, revokeTestUserSession, signInAsTestUser } from '../helpers/session';
 
-// Outside a request, Next.js has no headers to give: the test hands over the cookies of the visitor
-const ambient = vi.hoisted(() => ({ headers: new Headers() }));
-
-vi.mock('next/headers', () => ({
-  headers: () => Promise.resolve(ambient.headers),
-  cookies: () => Promise.resolve({ set: () => undefined, get: () => undefined, getAll: () => [] })
-}));
-
 type TSearchParams = Record<string, string | string[] | undefined>;
-
-function visitWith(cookie?: string) {
-  ambient.headers = new Headers(cookie === undefined ? {} : { cookie });
-}
 
 /**
   `redirect()` of Next.js stops the page by throwing an error that describes where to go. This reads

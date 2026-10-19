@@ -10,11 +10,6 @@ vi.hoisted(() => {
   vi.stubEnv('TEST', '');
 });
 
-vi.mock('next/headers', () => ({
-  headers: () => Promise.resolve(new Headers()),
-  cookies: () => Promise.resolve({ set: () => undefined, get: () => undefined, getAll: () => [] })
-}));
-
 afterAll(() => {
   vi.unstubAllEnvs();
 });

@@ -23,6 +23,10 @@ export function post(path: string, body: unknown, headers: Record<string, string
   );
 }
 
+export function get(path: string, headers: Record<string, string> = {}) {
+  return GET(new NextRequest(`${baseUrl}${path}`, { headers }));
+}
+
 export function signIn(address?: string, attemptedPassword = 'wrong-password') {
   return post(
     '/sign-in/email',

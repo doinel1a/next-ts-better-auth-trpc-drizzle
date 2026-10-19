@@ -4,6 +4,8 @@ import { nextCookies } from 'better-auth/next-js';
 
 import * as schema from '~/drizzle/schemas/auth';
 
+import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from '@/lib/constants/auth';
+
 import { db } from '../db';
 
 export const auth = betterAuth({
@@ -21,6 +23,8 @@ export const auth = betterAuth({
   },
   emailAndPassword: {
     enabled: true,
+    minPasswordLength: PASSWORD_MIN_LENGTH,
+    maxPasswordLength: PASSWORD_MAX_LENGTH,
     autoSignIn: false
     // requireEmailVerification: true,
     // revokeSessionsOnPasswordReset: true

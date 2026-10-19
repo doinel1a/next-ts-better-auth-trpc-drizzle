@@ -2,11 +2,12 @@
 
 import { useCallback } from 'react';
 
+import type { TSignUpSchema } from '../sign-up/schema';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
 
 import Button from '@/components/commons/button';
 import Form from '@/components/ui/controlled-form';
@@ -18,6 +19,7 @@ import { route } from '@/lib/constants/routes';
 import { getAuthErrorMessage } from '@/lib/utils/auth-errors';
 import clientLogger from '@/lib/utils/logger/client';
 
+import { signUpSchema } from '../sign-up/schema';
 import Container from './container';
 
 export default function SignUpForm() {
@@ -42,29 +44,11 @@ export default function SignUpForm() {
   );
 }
 
-type TSchema = z.infer<typeof schema>;
-const schema = z
-  .object({
-    name: z.string().min(2),
-    email: z.email(),
-    password: z.string().min(8),
-    confirmPassword: z.string().min(8)
-  })
-  .superRefine(({ password, confirmPassword }, ctx) => {
-    if (password !== confirmPassword) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'Passwords do not match',
-        path: ['confirmPassword']
-      });
-    }
-  });
-
 type TSignUpFormContent = Readonly<NonNullable<Parameters<typeof useSignUp>[0]>>;
 
 function SignUpFormContent({ onSuccess, onError, onException }: TSignUpFormContent) {
-  const form = useForm<TSchema>({
-    resolver: zodResolver(schema),
+  const form = useForm<TSignUpSchema>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -76,7 +60,7 @@ function SignUpFormContent({ onSuccess, onError, onException }: TSignUpFormConte
   const { isPending, submit } = useSignUp({ onSuccess, onError, onException });
 
   const onSubmit = useCallback(
-    ({ name, email, password }: TSchema) => {
+    ({ name, email, password }: TSignUpSchema) => {
       void submit({ name, email, password });
     },
     [submit]

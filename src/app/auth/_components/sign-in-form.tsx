@@ -2,11 +2,12 @@
 
 import { useCallback } from 'react';
 
+import type { TSignInSchema } from '../sign-in/schema';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
 
 import Button from '@/components/commons/button';
 import Form from '@/components/ui/controlled-form';
@@ -18,6 +19,7 @@ import { route } from '@/lib/constants/routes';
 import { getAuthErrorMessage } from '@/lib/utils/auth-errors';
 import clientLogger from '@/lib/utils/logger/client';
 
+import { signInSchema } from '../sign-in/schema';
 import Container from './container';
 
 export default function SignInForm() {
@@ -42,17 +44,11 @@ export default function SignInForm() {
   );
 }
 
-type TSchema = z.infer<typeof schema>;
-const schema = z.object({
-  email: z.email(),
-  password: z.string().min(8)
-});
-
 type TSignInFormContent = Readonly<NonNullable<Parameters<typeof useSignIn>[0]>>;
 
 function SignInFormContent({ onSuccess, onError, onException }: TSignInFormContent) {
-  const form = useForm<TSchema>({
-    resolver: zodResolver(schema),
+  const form = useForm<TSignInSchema>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: '',
       password: ''
@@ -62,7 +58,7 @@ function SignInFormContent({ onSuccess, onError, onException }: TSignInFormConte
   const { isPending, submit } = useSignIn({ onSuccess, onError, onException });
 
   const onSubmit = useCallback(
-    ({ email, password }: TSchema) => {
+    ({ email, password }: TSignInSchema) => {
       void submit({ email, password });
     },
     [submit]

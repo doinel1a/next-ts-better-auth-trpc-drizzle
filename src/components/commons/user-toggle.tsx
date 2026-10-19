@@ -44,6 +44,7 @@ export default function UserToggle() {
       <DropdownMenuTrigger asChild>
         <Button variant='outline' size='icon'>
           <TablerIcon name='IconUser' />
+          <span className='sr-only'>User menu</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end'>

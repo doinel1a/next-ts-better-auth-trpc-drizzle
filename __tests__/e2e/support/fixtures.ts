@@ -23,6 +23,10 @@ type TFixtures = {
     does not depend on another.
   */
   registeredUser: TNewUser;
+  /**
+    A registered user who is already signed in: the session cookie lives in the browser of the test.
+  */
+  signedInUser: TNewUser;
 };
 
 export const test = base.extend<TFixtures>({
@@ -57,5 +61,17 @@ export const test = base.extend<TFixtures>({
     }
 
     await provide(newUser);
+  },
+
+  signedInUser: async ({ registeredUser, page }, provide) => {
+    const response = await page.request.post('/api/auth/sign-in/email', {
+      headers: { origin: e2eConfig.baseURL },
+      data: registeredUser
+    });
+    if (!response.ok()) {
+      throw new Error(`Could not sign in the user of the test: ${response.status()}`);
+    }
+
+    await provide(registeredUser);
   }
 });

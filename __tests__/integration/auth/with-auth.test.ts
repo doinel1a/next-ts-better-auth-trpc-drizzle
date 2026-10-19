@@ -1,13 +1,15 @@
-import { eq } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 import { describe, expect, it, vi } from 'vitest';
 
-import { sessions, users } from '~/drizzle/schemas/auth';
-
 import { GET as getProtectedRoute } from '@/app/api/v1/test/route';
-import { auth } from '@/server/auth';
 import { withAuth } from '@/server/auth/with-auth';
-import { db } from '@/server/db';
+
+import {
+  expireTestUserSession,
+  revokeTestUserSession,
+  signInAsTestUser,
+  testUserEmail
+} from '../helpers/session';
 
 const ambient = vi.hoisted(() => ({ headers: new Headers() }));
 
@@ -16,7 +18,7 @@ vi.mock('next/headers', () => ({
   cookies: () => Promise.resolve({ set: () => undefined, get: () => undefined, getAll: () => [] })
 }));
 
-const email = 'user@example.com';
+const email = testUserEmail;
 
 function visitWith(cookie?: string) {
   ambient.headers = new Headers(cookie === undefined ? {} : { cookie });
@@ -24,43 +26,6 @@ function visitWith(cookie?: string) {
 
 function createRequest() {
   return new NextRequest('http://localhost:3000/api/resource');
-}
-
-async function signIn() {
-  await auth.api.signUpEmail({ body: { name: 'Al', email, password: 'password1' } });
-  const response = await auth.api.signInEmail({
-    body: { email, password: 'password1' },
-    asResponse: true
-  });
-
-  const cookies = response.headers.getSetCookie().map((cookie) => cookie.split(';', 1)[0] ?? '');
-
-  return {
-    sessionOnly: cookies
-      .filter((cookie) => cookie.startsWith('better-auth.session_token='))
-      .join('; '),
-    browser: cookies.join('; ')
-  };
-}
-
-async function getUserId() {
-  const [user] = await db.select({ id: users.id }).from(users).where(eq(users.email, email));
-  if (user === undefined) {
-    throw new Error('Expected the user to exist');
-  }
-
-  return user.id;
-}
-
-async function expireSession() {
-  await db
-    .update(sessions)
-    .set({ expiresAt: new Date(Date.now() - 1000) })
-    .where(eq(sessions.userId, await getUserId()));
-}
-
-async function revokeSession() {
-  await db.delete(sessions).where(eq(sessions.userId, await getUserId()));
 }
 
 function createHandler() {
@@ -88,8 +53,8 @@ describe('withAuth', () => {
 
     it('answers 401 once the session has expired', async () => {
       const handler = createHandler();
-      const { sessionOnly } = await signIn();
-      await expireSession();
+      const { sessionOnly } = await signInAsTestUser();
+      await expireTestUserSession();
       visitWith(sessionOnly);
 
       const response = await withAuth(handler)(createRequest(), {});
@@ -100,8 +65,8 @@ describe('withAuth', () => {
 
     it('answers 401 once the session has been revoked', async () => {
       const handler = createHandler();
-      const { sessionOnly } = await signIn();
-      await revokeSession();
+      const { sessionOnly } = await signInAsTestUser();
+      await revokeTestUserSession();
       visitWith(sessionOnly);
 
       const response = await withAuth(handler)(createRequest(), {});
@@ -114,7 +79,7 @@ describe('withAuth', () => {
   describe('with a valid session', () => {
     it('calls the handler once with the request, the context and the session', async () => {
       const handler = createHandler();
-      const { sessionOnly } = await signIn();
+      const { sessionOnly } = await signInAsTestUser();
       visitWith(sessionOnly);
       const request = createRequest();
       const context = { params: Promise.resolve({ id: '42' }) };
@@ -130,7 +95,7 @@ describe('withAuth', () => {
 
     it('gives the handler the session of the visitor who is asking', async () => {
       const handler = createHandler();
-      const { sessionOnly } = await signIn();
+      const { sessionOnly } = await signInAsTestUser();
       visitWith(sessionOnly);
 
       await withAuth(handler)(createRequest(), {});
@@ -142,7 +107,7 @@ describe('withAuth', () => {
     });
 
     it('returns the response of the handler untouched', async () => {
-      const { sessionOnly } = await signIn();
+      const { sessionOnly } = await signInAsTestUser();
       visitWith(sessionOnly);
       const handler = vi.fn(() =>
         NextResponse.json({ created: true }, { status: 201, headers: { 'x-custom': 'yes' } })
@@ -158,7 +123,7 @@ describe('withAuth', () => {
 
   describe('the handler', () => {
     it('can be asynchronous', async () => {
-      const { sessionOnly } = await signIn();
+      const { sessionOnly } = await signInAsTestUser();
       visitWith(sessionOnly);
       const handler = vi.fn(async () => {
         await Promise.resolve();
@@ -171,7 +136,7 @@ describe('withAuth', () => {
     });
 
     it('lets an error rejected by an asynchronous handler through, instead of answering 401', async () => {
-      const { sessionOnly } = await signIn();
+      const { sessionOnly } = await signInAsTestUser();
       visitWith(sessionOnly);
       const failure = new Error('database is down');
       const handler = vi.fn(async () => {
@@ -183,7 +148,7 @@ describe('withAuth', () => {
     });
 
     it('lets an error thrown by the handler through, instead of answering 401', async () => {
-      const { sessionOnly } = await signIn();
+      const { sessionOnly } = await signInAsTestUser();
       visitWith(sessionOnly);
       const failure = new Error('database is down');
       const handler = vi.fn(() => {
@@ -195,7 +160,7 @@ describe('withAuth', () => {
 
     it('is not called when only the cookie that caches the session is sent', async () => {
       const handler = createHandler();
-      const { browser } = await signIn();
+      const { browser } = await signInAsTestUser();
       const cacheOnly = browser
         .split('; ')
         .filter((cookie) => cookie.startsWith('better-auth.session_data='))
@@ -214,8 +179,8 @@ describe('withAuth', () => {
   describe('known trade-off of the session cache', () => {
     it('still accepts a revoked session when the browser sends the cache cookie', async () => {
       const handler = createHandler();
-      const { browser } = await signIn();
-      await revokeSession();
+      const { browser } = await signInAsTestUser();
+      await revokeTestUserSession();
       visitWith(browser);
 
       const response = await withAuth(handler)(createRequest(), {});
@@ -237,7 +202,7 @@ describe('GET /api/v1/test', () => {
   });
 
   it('answers 200 to a signed in visitor', async () => {
-    const { sessionOnly } = await signIn();
+    const { sessionOnly } = await signInAsTestUser();
     visitWith(sessionOnly);
 
     const response = await getProtectedRoute(createRequest(), {});

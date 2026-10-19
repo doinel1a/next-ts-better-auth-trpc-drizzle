@@ -21,7 +21,9 @@ export async function redirectIfAuthenticated(searchParams: Promise<TSearchParam
   }
 
   const params = await searchParams;
-  const redirectUrl = params[searchParamsKey.redirectUrl];
+  const param = params[searchParamsKey.redirectUrl];
+  const redirectUrl = Array.isArray(param) ? param[0] : param;
+
   redirect(
     resolveRedirectUrl(typeof redirectUrl === 'string' ? redirectUrl : null, route.home),
     RedirectType.replace

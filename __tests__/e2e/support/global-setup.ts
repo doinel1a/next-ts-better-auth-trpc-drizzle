@@ -39,6 +39,14 @@ async function migrateDatabase(databaseUrl: string) {
   }
 }
 
+const pagesToWarmUp = ['/', '/auth/sign-up', '/auth/sign-in', '/api/auth/ok'];
+
+async function warmUpApp() {
+  for (const path of pagesToWarmUp) {
+    await fetch(new URL(path, e2eConfig.baseURL));
+  }
+}
+
 /**
   Starts every run from an empty database with the real migrations applied, and drops it at the end.
   It is dropped first as well, in case a previous run was interrupted before it could clean up.
@@ -50,6 +58,7 @@ export default async function globalSetup() {
   await dropDatabase(adminUrl);
   await createDatabase(adminUrl);
   await migrateDatabase(databaseUrl);
+  await warmUpApp();
 
   return async () => {
     if (process.env['E2E_KEEP_DB'] === 'true') {

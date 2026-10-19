@@ -1,5 +1,7 @@
 /* eslint-disable sonarjs/pseudo-random */
 
+import type { TSession } from '@/server/auth';
+
 import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import z, { ZodError } from 'zod';
@@ -10,14 +12,20 @@ import { auth } from '@/server/auth';
 
 import { db } from '../db';
 
-export const createTRPCContext = async (options: { headers: Headers }) => {
-  const data = await auth.api.getSession({ headers: options.headers });
+export const createTRPCContext = async (options: {
+  headers: Headers;
+  session?: TSession | null;
+}) => {
+  const data =
+    options.session === undefined
+      ? await auth.api.getSession({ headers: options.headers })
+      : options.session;
 
   return {
+    headers: options.headers,
     db,
     session: data?.session ?? null,
-    user: data?.user ?? null,
-    ...options
+    user: data?.user ?? null
   };
 };
 

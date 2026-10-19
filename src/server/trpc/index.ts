@@ -9,6 +9,7 @@ import { headers } from 'next/headers';
 
 import { createCaller } from '../api/root';
 import { createTRPCContext } from '../api/trpc';
+import { getSession } from '../auth/server';
 import { createQueryClient } from './query-client';
 
 const createContext = cache(async () => {
@@ -16,7 +17,8 @@ const createContext = cache(async () => {
   heads.set('x-trpc-source', 'rsc');
 
   return createTRPCContext({
-    headers: heads
+    headers: heads,
+    session: await getSession()
   });
 });
 

@@ -1,10 +1,9 @@
 import type { NextRequest } from 'next/server';
+import type { TSession } from '.';
 
 import { NextResponse } from 'next/server';
 
 import { getSession } from './server';
-
-type TSession = NonNullable<Awaited<ReturnType<typeof getSession>>>;
 
 type THandler<TContext> = (
   request: NextRequest,

@@ -2,19 +2,11 @@ import type { Page } from '@playwright/test';
 
 import { e2eConfig } from '../support/config';
 import { expect, test } from '../support/fixtures';
+import { openForm } from '../support/forms';
 
 type TCredentials = { name: string; email: string; password: string; confirmPassword?: string };
 
 const successMessage = 'Request received. You can now sign in.';
-
-async function openForm(page: Page, url: string) {
-  await page.goto(url);
-  await page.waitForFunction(() => {
-    const form = document.querySelector('form');
-
-    return form !== null && Object.keys(form).some((key) => key.startsWith('__reactProps'));
-  });
-}
 
 async function fillAndSubmit(page: Page, credentials: TCredentials) {
   await page.getByLabel('Name').fill(credentials.name);

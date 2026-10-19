@@ -2,6 +2,8 @@ import { createHash, randomUUID } from 'node:crypto';
 
 import { test as base } from '@playwright/test';
 
+import { e2eConfig } from './config';
+
 export { expect } from '@playwright/test';
 
 type TNewUser = { name: string; email: string; password: string };
@@ -16,6 +18,11 @@ type TFixtures = {
     Credentials nobody has used yet, so tests running in parallel never share an account.
   */
   newUser: TNewUser;
+  /**
+    A user that already exists in the database, created through the API so that a test of one form
+    does not depend on another.
+  */
+  registeredUser: TNewUser;
 };
 
 export const test = base.extend<TFixtures>({
@@ -38,5 +45,17 @@ export const test = base.extend<TFixtures>({
       email: `e2e-${randomUUID()}@e2e.test`,
       password: 'password1'
     });
+  },
+
+  registeredUser: async ({ newUser, request }, provide) => {
+    const response = await request.post('/api/auth/sign-up/email', {
+      headers: { origin: e2eConfig.baseURL },
+      data: newUser
+    });
+    if (!response.ok()) {
+      throw new Error(`Could not create the user of the test: ${response.status()}`);
+    }
+
+    await provide(newUser);
   }
 });

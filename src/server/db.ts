@@ -17,7 +17,10 @@ const globalForDb = globalThis as unknown as {
 function createPool() {
   const pool = new postgres.Pool({ connectionString: env.DATABASE_URL });
   pool.on('error', (connectionError) => {
-    console.error('SERVER ERROR | Idle database client error', connectionError);
+    console.error('SERVER ERROR | Idle database client error', {
+      code: 'code' in connectionError ? connectionError.code : undefined,
+      message: connectionError.message
+    });
   });
 
   return pool;

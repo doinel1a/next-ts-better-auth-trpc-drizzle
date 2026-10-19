@@ -1,14 +1,16 @@
 /* eslint-disable unicorn/no-top-level-side-effects */
 
+import { existsSync } from 'node:fs';
+
 import { defineConfig, devices } from '@playwright/test';
 
-import config from './_config';
+import { e2eConfig, getDatabaseUrls } from './__tests__/e2e/support/config';
 
-/**
-  Read environment variables from file.
-  https://github.com/motdotla/dotenv
-*/
-// require('dotenv').config();
+if (existsSync('.env')) {
+  process.loadEnvFile('.env');
+}
+
+const isCI = process.env['CI'] !== undefined;
 
 /**
   See https://playwright.dev/docs/test-configuration.
@@ -33,15 +35,15 @@ export default defineConfig({
   /*
     Fail the build on CI if you accidentally left test.only in the source code.
   */
-  forbidOnly: process.env['CI'] !== undefined,
+  forbidOnly: isCI,
   /*
     Retry on CI only
   */
-  retries: process.env['CI'] === undefined ? 0 : 2,
+  retries: isCI ? 2 : 0,
   /*
     Opt out of parallel tests on CI.
   */
-  workers: process.env['CI'] === undefined ? undefined : 1,
+  workers: isCI ? 1 : undefined,
   /*
     Reporter to use. See https://playwright.dev/docs/test-reporters
   */
@@ -57,7 +59,7 @@ export default defineConfig({
     /*
       Base URL to use in actions like `await page.goto('/')`.
     */
-    // baseURL: 'http://localhost:3000',
+    baseURL: e2eConfig.baseURL,
 
     /*
       Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer
@@ -115,12 +117,27 @@ export default defineConfig({
   outputDir: '__tests_results__',
 
   /*
-    Run your local dev server before starting the tests
+    Creates the database of the e2e tests before the run and drops it at the end
+  */
+  globalSetup: './__tests__/e2e/support/global-setup.ts',
+
+  /*
+    The e2e tests start their own copy of the app, on a port and a database of their own
   */
   webServer: {
     // CI tests the production build (`pnpm build` runs in the workflow), locally the dev server
-    command: process.env['CI'] === undefined ? 'pnpm dev' : 'pnpm preview',
-    port: config.server.port,
-    reuseExistingServer: process.env['CI'] === undefined
+    command: isCI ? 'pnpm preview' : 'pnpm dev',
+    port: e2eConfig.port,
+    // A server that is already running is wired to the development database, so it is never reused
+    reuseExistingServer: false,
+    // The development server compiles each page the first time it is opened
+    timeout: 120 * 1000,
+    env: {
+      PORT: String(e2eConfig.port),
+      NODE_ENV: isCI ? 'production' : 'development',
+      // Better Auth only accepts requests that come from this address
+      BETTER_AUTH_URL: e2eConfig.baseURL,
+      DATABASE_URL: getDatabaseUrls().databaseUrl
+    }
   }
 });

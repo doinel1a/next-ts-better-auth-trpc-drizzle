@@ -6,8 +6,7 @@ type TErrorCode = keyof typeof authClient.$ERROR_CODES;
 
 const errorMessages: Partial<Record<TErrorCode, string>> = {
   INVALID_EMAIL_OR_PASSWORD: 'Invalid email or password.',
-  EMAIL_NOT_VERIFIED: 'Please verify your email before signing in.',
-  USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL: 'An account with this email already exists.'
+  EMAIL_NOT_VERIFIED: 'Please verify your email before signing in.'
 };
 
 export function getAuthErrorMessage(error: { status: number; code?: unknown }, fallback: string) {

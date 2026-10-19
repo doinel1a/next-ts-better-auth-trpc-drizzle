@@ -161,7 +161,9 @@ describe('authentication flows', () => {
 
   // `autoSignIn: false` makes Better Auth answer a duplicate like a new account, so that nobody can
   // find out which emails are registered. Nothing is created, and the password of the existing
-  // account stays as it was. It also means the form never gets the "already exists" error
+  // account stays as it was. It also means the form never gets an "already exists" error, which is
+  // why its message says "Request received" and not that an account was created. If `autoSignIn`
+  // is ever turned on, these tests fail and the form message has to be looked at again
   describe('signing up with an email that is already registered', () => {
     it('answers like a new account', async () => {
       const first = await signUp();

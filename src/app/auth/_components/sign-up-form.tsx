@@ -29,7 +29,9 @@ export default function SignUpForm() {
   return (
     <SignUpFormContent
       onSuccess={() => {
-        toast.success('Sign up successful');
+        // Better Auth answers a duplicate email like a new account (see `autoSignIn` in the auth
+        // config), so this cannot say that an account was created
+        toast.success('Request received. You can now sign in.');
         router.replace(redirectUrl);
       }}
       onError={(ctx) => {

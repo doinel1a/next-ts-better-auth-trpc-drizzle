@@ -15,12 +15,6 @@ describe('getAuthErrorMessage', () => {
         403,
         'EMAIL_NOT_VERIFIED',
         'Please verify your email before signing in.'
-      ],
-      [
-        'an email already in use',
-        422,
-        'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
-        'An account with this email already exists.'
       ]
     ])('explains %s', (_label, status, code, expected) => {
       expect(getAuthErrorMessage({ status, code }, fallback)).toBe(expected);
@@ -59,7 +53,13 @@ describe('getAuthErrorMessage', () => {
       ['a numeric code', { status: 400, code: 42 }],
       ['an object code', { status: 400, code: { code: 'INVALID_EMAIL_OR_PASSWORD' } }],
       ['an empty code', { status: 400, code: '' }],
-      ['a known code in lowercase', { status: 400, code: 'invalid_email_or_password' }]
+      ['a known code in lowercase', { status: 400, code: 'invalid_email_or_password' }],
+      // With `autoSignIn: false` Better Auth answers a duplicate sign up like a new account, so this
+      // code is never reported and has no message of its own (see the authentication flows tests)
+      [
+        'an email already in use, which a sign up does not report',
+        { status: 422, code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL' }
+      ]
     ])('uses the fallback for %s', (_label, error) => {
       expect(getAuthErrorMessage(error, fallback)).toBe(fallback);
     });
@@ -98,15 +98,14 @@ describe('getAuthErrorMessage', () => {
   // better-auth reports `error.code` with the same name as its server-side `BASE_ERROR_CODES` key.
   // If an upgrade renames one of the codes we map, the friendly message would silently stop showing
   describe('contract with better-auth', () => {
-    it.each([
-      ['INVALID_EMAIL_OR_PASSWORD'],
-      ['EMAIL_NOT_VERIFIED'],
-      ['USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL']
-    ] as const)('still maps the %s code better-auth reports', (key) => {
-      const { code } = BASE_ERROR_CODES[key];
+    it.each([['INVALID_EMAIL_OR_PASSWORD'], ['EMAIL_NOT_VERIFIED']] as const)(
+      'still maps the %s code better-auth reports',
+      (key) => {
+        const { code } = BASE_ERROR_CODES[key];
 
-      expect(code).toBe(key);
-      expect(getAuthErrorMessage({ status: 400, code }, fallback)).not.toBe(fallback);
-    });
+        expect(code).toBe(key);
+        expect(getAuthErrorMessage({ status: 400, code }, fallback)).not.toBe(fallback);
+      }
+    );
   });
 });

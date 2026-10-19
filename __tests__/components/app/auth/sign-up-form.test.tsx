@@ -217,7 +217,11 @@ describe('SignUpForm', () => {
       await waitFor(() => {
         expect(navigation.replace).toHaveBeenCalledExactlyOnceWith('/auth/sign-in');
       });
-      expect(toast.success).toHaveBeenCalledExactlyOnceWith('Sign up successful');
+      // The server answers the same way for a new account and for an email that is already
+      // registered, so the message cannot promise that an account was created
+      expect(toast.success).toHaveBeenCalledExactlyOnceWith(
+        'Request received. You can now sign in.'
+      );
       expect(toast.error).not.toHaveBeenCalled();
     });
 
@@ -299,11 +303,6 @@ describe('SignUpForm', () => {
   describe('failed sign up', () => {
     it.each([
       [
-        'an email already in use',
-        { status: 422, code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL' },
-        'An account with this email already exists.'
-      ],
-      [
         'too many attempts',
         { status: 429 },
         'Too many attempts. Please wait a moment and try again.'
@@ -341,7 +340,7 @@ describe('SignUpForm', () => {
     });
 
     it('logs the error that made the sign up fail', async () => {
-      const error = { status: 422, code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL' };
+      const error = { status: 400, code: 'PASSWORD_TOO_LONG' };
       respondWith(({ onError }) => onError?.({ error } as never));
       render(<SignUpForm />);
 
@@ -367,7 +366,7 @@ describe('SignUpForm', () => {
     it('keeps what was typed and lets the visitor try again', async () => {
       respondWith(({ onError }) =>
         onError?.({
-          error: { status: 422, code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL' }
+          error: { status: 400, code: 'PASSWORD_TOO_LONG' }
         } as never)
       );
       render(<SignUpForm />);

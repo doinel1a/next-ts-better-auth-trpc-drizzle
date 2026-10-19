@@ -94,7 +94,7 @@ describe('useSignUp', () => {
 
     it('forwards an API error to onError, not onException', async () => {
       const callbacks = createCallbacks();
-      const context = { error: { status: 422, code: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL' } };
+      const context = { error: { status: 400, code: 'PASSWORD_TOO_LONG' } };
       signUpEmail.mockImplementation((async (_credentials: unknown, options: TSignUpOptions) => {
         await options.onError?.(context as never);
       }) as never);

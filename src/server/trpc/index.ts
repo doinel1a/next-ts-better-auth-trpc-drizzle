@@ -12,7 +12,7 @@ import { createTRPCContext } from '../api/trpc';
 import { getSession } from '../auth/server';
 import { createQueryClient } from './query-client';
 
-const createContext = cache(async () => {
+export const createContext = cache(async () => {
   const heads = new Headers(await headers());
   heads.set('x-trpc-source', 'rsc');
 

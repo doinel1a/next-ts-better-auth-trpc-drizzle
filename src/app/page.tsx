@@ -2,7 +2,7 @@ import { redirect, RedirectType } from 'next/navigation';
 
 import { route } from '@/lib/constants/routes';
 import { getSession } from '@/server/auth/server';
-import { api } from '@/server/trpc';
+import { trpc } from '@/server/trpc';
 
 export default async function HomePage() {
   const session = await getSession();
@@ -10,7 +10,7 @@ export default async function HomePage() {
     redirect(route.signIn, RedirectType.replace);
   }
 
-  const students = await api.students.getFirst();
+  const students = await trpc.students.getFirst();
   // eslint-disable-next-line no-console
   console.log('students', students);
 

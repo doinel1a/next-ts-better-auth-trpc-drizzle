@@ -47,7 +47,7 @@ async function warmUpApp() {
   }
 }
 
-/**
+/*
   Starts every run from an empty database with the real migrations applied, and drops it at the end.
   It is dropped first as well, in case a previous run was interrupted before it could clean up.
   Set `E2E_KEEP_DB=true` to keep the database after the run, to look at it when a test fails.

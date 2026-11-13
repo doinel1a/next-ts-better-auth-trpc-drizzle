@@ -11,7 +11,7 @@ type THandler<TContext> = (
   session: TSession
 ) => Promise<Response> | Response;
 
-/**
+/*
   Protects a route handler: answers `401` when there is no valid session, otherwise calls the
   handler with the session as third argument.
   `/api` is excluded from the proxy matcher, so route handlers under it must use this (or check the

@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/no-top-level-side-effects */
-
 import tanstackQuery from '@tanstack/eslint-plugin-query';
 import vitest from '@vitest/eslint-plugin';
 import eslintConfigNext from 'eslint-config-next';
@@ -19,7 +17,7 @@ export default defineConfig(
   {
     ignores: ['.next', 'coverage', '*.js']
   },
-  /**
+  /*
     eslint-config-next automatically configures:
     - eslint-plugin-react
     - eslint-plugin-react-hooks

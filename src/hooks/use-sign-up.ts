@@ -6,7 +6,7 @@ import { signUp } from '@/server/auth/client';
 
 type TOptions = NonNullable<Parameters<typeof signUp.email>[1]>;
 type TCallbacks = Pick<TOptions, 'onSuccess' | 'onError'> & {
-  /**
+  /*
     Called when the request throws instead of returning a response (e.g. network failure), in which
     case `onError` is never called.
   */

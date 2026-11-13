@@ -1,6 +1,6 @@
 import type { Page } from '@playwright/test';
 
-/**
+/*
   A form submitted before React has hydrated it is sent by the browser itself and reloads the page,
   so the tests wait until the form is wired up.
 */

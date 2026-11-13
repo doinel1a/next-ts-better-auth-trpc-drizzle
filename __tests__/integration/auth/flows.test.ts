@@ -75,8 +75,8 @@ function findSetCookie(response: Response, cookieName: string) {
   return setCookiesOf(response).find((cookie) => cookie.startsWith(`${cookieName}=`));
 }
 
-/**
-What a browser would send back after a response: the `name=value` part of every cookie set.
+/*
+  What a browser would send back after a response: the `name=value` part of every cookie set.
 */
 function cookiesToSend(response: Response, cookieNames?: string[]) {
   return setCookiesOf(response)

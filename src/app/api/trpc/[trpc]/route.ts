@@ -7,7 +7,7 @@ import { serverLogger } from '@/lib/utils/logger/server';
 import { appRouter } from '@/server/api/root';
 import { createTRPCContext } from '@/server/api/trpc';
 
-/**
+/*
   This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
   handling a HTTP request (e.g. when you make requests from Client Components).
 */
@@ -25,11 +25,10 @@ const handler = (request: NextRequest) =>
     createContext: () => createContext(request),
     onError: ({ path = '<no-path>', error }) => {
       const label = `tRPC failed on ${path}`;
-      if (env.NODE_ENV === 'development') {
-        serverLogger.error(label, error);
-      } else {
-        serverLogger.error(label, { code: error.code, message: error.message });
-      }
+      serverLogger.error(
+        label,
+        env.NODE_ENV === 'development' ? error : { code: error.code, message: error.message }
+      );
     }
   });
 

@@ -28,7 +28,7 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  /**
+  /*
     Skips Next.js internals, API routes (protected by `withAuth` / tRPC) and any path with a file
     extension, i.e. static assets served from `public/` (logo.png, favicon.svg, robots.txt, ...).
   */

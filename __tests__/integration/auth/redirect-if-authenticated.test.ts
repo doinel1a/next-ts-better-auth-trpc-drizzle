@@ -7,7 +7,7 @@ import { expireTestUserSession, revokeTestUserSession, signInAsTestUser } from '
 
 type TSearchParams = Record<string, string | string[] | undefined>;
 
-/**
+/*
   `redirect()` of Next.js stops the page by throwing an error that describes where to go. This reads
   that description, and gives back `null` when the page was allowed to carry on.
 */

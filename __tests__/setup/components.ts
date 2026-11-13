@@ -5,7 +5,7 @@ import { afterEach, beforeEach, vi } from 'vitest';
 
 import { navigation, resetNavigation } from './helpers/navigation';
 
-/**
+/*
   The real router only works inside the Next.js app router, so components get this one. Tests set
   `navigation.searchParams` and look at `navigation.replace` / `navigation.refresh`.
 */

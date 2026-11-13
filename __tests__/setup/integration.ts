@@ -2,7 +2,7 @@ import { beforeEach, vi } from 'vitest';
 
 import { currentRequest, visitWith } from './helpers/request';
 
-/**
+/*
   Server code reads the visitor's cookies from `headers()`, which only works inside a Next.js
   request. Tests set them with `visitWith`, and every test starts from a visitor without cookies.
 */
@@ -15,7 +15,7 @@ beforeEach(() => {
   visitWith();
 });
 
-/**
+/*
   Replaces the app's pooled `db` with an in-memory PGlite instance running the real migrations, so
   integration tests exercise the actual schema without a Postgres server. Every test file gets its
   own isolated instance.

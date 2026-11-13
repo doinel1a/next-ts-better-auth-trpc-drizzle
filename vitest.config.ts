@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/no-top-level-side-effects */
-
 import path from 'node:path';
 
 import { defineConfig } from 'vitest/config';

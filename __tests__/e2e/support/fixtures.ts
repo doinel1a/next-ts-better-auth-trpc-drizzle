@@ -9,21 +9,21 @@ export { expect } from '@playwright/test';
 type TNewUser = { name: string; email: string; password: string };
 
 type TFixtures = {
-  /**
+  /*
     Address the app sees the browser coming from. Every test gets its own, so the rate limit of one
     test never counts the requests of another.
   */
   clientAddress: string;
-  /**
+  /*
     Credentials nobody has used yet, so tests running in parallel never share an account.
   */
   newUser: TNewUser;
-  /**
+  /*
     A user that already exists in the database, created through the API so that a test of one form
     does not depend on another.
   */
   registeredUser: TNewUser;
-  /**
+  /*
     A registered user who is already signed in: the session cookie lives in the browser of the test.
   */
   signedInUser: TNewUser;
